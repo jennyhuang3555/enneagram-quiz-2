@@ -1,17 +1,67 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Quiz } from "@/types/quiz";
+import {
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+} from "@/components/ui/chart";
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  ResponsiveContainer,
+  Tooltip,
+} from "recharts";
 
 interface QuizResultsProps {
   quiz: Quiz;
-  scores: { [key: string]: number }; // Changed from single score to scores by type
+  scores: { [key: string]: number };
   onClose: () => void;
 }
 
 const QuizResults = ({ quiz, scores, onClose }: QuizResultsProps) => {
+  const chartData = Object.entries(scores).map(([type, score]) => ({
+    type,
+    score,
+  }));
+
+  const config = {
+    score: {
+      theme: {
+        light: "hsl(var(--primary))",
+        dark: "hsl(var(--primary))",
+      },
+    },
+  };
+
   return (
-    <Card className="p-6 max-w-2xl mx-auto space-y-6 animate-fade-in">
-      <h2 className="text-2xl font-bold">Quiz Results</h2>
+    <Card className="p-6 max-w-4xl mx-auto space-y-6 animate-fade-in">
+      <h2 className="text-2xl font-bold">Your Enneagram Results</h2>
+      
+      <div className="h-[300px] w-full">
+        <ChartContainer config={config}>
+          <BarChart data={chartData}>
+            <XAxis dataKey="type" />
+            <YAxis />
+            <Tooltip
+              content={({ active, payload }) => {
+                if (!active || !payload) return null;
+                return (
+                  <ChartTooltipContent
+                    payload={payload}
+                    nameKey="type"
+                    labelKey="score"
+                  />
+                );
+              }}
+            />
+            <Bar dataKey="score" fill="hsl(var(--primary))" />
+          </BarChart>
+        </ChartContainer>
+      </div>
+
       <div className="space-y-4">
         {Object.entries(scores).map(([type, score]) => (
           <div key={type} className="border-b pb-4">
@@ -33,7 +83,7 @@ const QuizResults = ({ quiz, scores, onClose }: QuizResultsProps) => {
           </div>
         ))}
         <Button onClick={onClose} className="w-full">
-          Close Preview
+          Close Results
         </Button>
       </div>
     </Card>

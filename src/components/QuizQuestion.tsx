@@ -55,8 +55,7 @@ const QuizQuestion = ({
               }`}
               onClick={() => setSelectedScore(option.score)}
             >
-              <span>{option.label}</span>
-              <span className="ml-auto text-sm opacity-70">Score: {option.score}</span>
+              {option.label}
             </Button>
           ))}
         </div>
