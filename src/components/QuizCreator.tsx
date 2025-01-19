@@ -7,16 +7,32 @@ import { Card } from "@/components/ui/card";
 import { Plus, Trash2 } from "lucide-react";
 import { Quiz, Question, ResultRange } from "@/types/quiz";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 interface QuizCreatorProps {
   onQuizCreate: (quiz: Quiz) => void;
 }
+
+const SCORE_OPTIONS = [
+  { value: 1, label: "Not Me at All" },
+  { value: 2, label: "Rarely Me" },
+  { value: 3, label: "Sometimes Me" },
+  { value: 4, label: "Often Me" },
+  { value: 5, label: "Definitely Me" },
+];
 
 const QuizCreator = ({ onQuizCreate }: QuizCreatorProps) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [questions, setQuestions] = useState<Question[]>([]);
   const [resultRanges, setResultRanges] = useState<ResultRange[]>([]);
+  const [category, setCategory] = useState("core"); // Default category
 
   const addQuestion = () => {
     setQuestions([
@@ -24,10 +40,12 @@ const QuizCreator = ({ onQuizCreate }: QuizCreatorProps) => {
       {
         id: crypto.randomUUID(),
         text: "",
-        options: [
-          { id: crypto.randomUUID(), text: "", points: 0 },
-          { id: crypto.randomUUID(), text: "", points: 0 },
-        ],
+        category: category,
+        options: SCORE_OPTIONS.map((option) => ({
+          id: crypto.randomUUID(),
+          text: option.label,
+          points: option.value,
+        })),
       },
     ]);
   };
@@ -47,9 +65,7 @@ const QuizCreator = ({ onQuizCreate }: QuizCreatorProps) => {
 
   const updateQuestion = (questionId: string, updates: Partial<Question>) => {
     setQuestions(
-      questions.map((q) =>
-        q.id === questionId ? { ...q, ...updates } : q
-      )
+      questions.map((q) => (q.id === questionId ? { ...q, ...updates } : q))
     );
   };
 
@@ -74,9 +90,7 @@ const QuizCreator = ({ onQuizCreate }: QuizCreatorProps) => {
 
   const updateResultRange = (rangeId: string, updates: Partial<ResultRange>) => {
     setResultRanges(
-      resultRanges.map((r) =>
-        r.id === rangeId ? { ...r, ...updates } : r
-      )
+      resultRanges.map((r) => (r.id === rangeId ? { ...r, ...updates } : r))
     );
   };
 
@@ -91,8 +105,9 @@ const QuizCreator = ({ onQuizCreate }: QuizCreatorProps) => {
   };
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 p-6">
       <div className="space-y-4">
+        <h2 className="text-2xl font-bold">Quiz Configuration</h2>
         <div>
           <Label htmlFor="title">Quiz Title</Label>
           <Input
@@ -118,10 +133,22 @@ const QuizCreator = ({ onQuizCreate }: QuizCreatorProps) => {
       <div className="space-y-4">
         <div className="flex justify-between items-center">
           <h3 className="text-lg font-semibold">Questions</h3>
-          <Button onClick={addQuestion} variant="outline" size="sm">
-            <Plus className="w-4 h-4 mr-2" />
-            Add Question
-          </Button>
+          <div className="flex gap-4">
+            <Select value={category} onValueChange={setCategory}>
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder="Select category" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="core">Core Types</SelectItem>
+                <SelectItem value="motivations">Motivations</SelectItem>
+                <SelectItem value="fears">Fears</SelectItem>
+              </SelectContent>
+            </Select>
+            <Button onClick={addQuestion} variant="outline" size="sm">
+              <Plus className="w-4 h-4 mr-2" />
+              Add Question
+            </Button>
+          </div>
         </div>
 
         <TransitionGroup className="space-y-4">
@@ -133,7 +160,12 @@ const QuizCreator = ({ onQuizCreate }: QuizCreatorProps) => {
             >
               <Card className="p-4 space-y-4">
                 <div className="flex justify-between items-start">
-                  <Label>Question {index + 1}</Label>
+                  <div className="space-y-2">
+                    <Label>Question {index + 1}</Label>
+                    <div className="text-sm text-muted-foreground">
+                      Category: {question.category}
+                    </div>
+                  </div>
                   <Button
                     variant="ghost"
                     size="sm"
@@ -152,44 +184,33 @@ const QuizCreator = ({ onQuizCreate }: QuizCreatorProps) => {
                   placeholder="Enter question text"
                 />
                 <div className="space-y-2">
-                  {question.options.map((option, optionIndex) => (
-                    <div key={option.id} className="flex gap-2">
-                      <Input
-                        value={option.text}
-                        onChange={(e) =>
-                          updateOption(question.id, option.id, {
-                            text: e.target.value,
-                          })
-                        }
-                        placeholder={`Option ${optionIndex + 1}`}
-                      />
-                      <Input
-                        type="number"
-                        value={option.points}
-                        onChange={(e) =>
-                          updateOption(question.id, option.id, {
-                            points: parseInt(e.target.value) || 0,
-                          })
-                        }
-                        placeholder="Points"
-                        className="w-24"
-                      />
+                  {question.options.map((option) => (
+                    <div key={option.id} className="flex gap-2 items-center">
+                      <div className="flex-grow">
+                        <Input
+                          value={option.text}
+                          onChange={(e) =>
+                            updateOption(question.id, option.id, {
+                              text: e.target.value,
+                            })
+                          }
+                          placeholder="Option text"
+                        />
+                      </div>
+                      <div className="w-24">
+                        <Input
+                          type="number"
+                          value={option.points}
+                          onChange={(e) =>
+                            updateOption(question.id, option.id, {
+                              points: parseInt(e.target.value) || 0,
+                            })
+                          }
+                          placeholder="Points"
+                        />
+                      </div>
                     </div>
                   ))}
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() =>
-                      updateQuestion(question.id, {
-                        options: [
-                          ...question.options,
-                          { id: crypto.randomUUID(), text: "", points: 0 },
-                        ],
-                      })
-                    }
-                  >
-                    Add Option
-                  </Button>
                 </div>
               </Card>
             </CSSTransition>
