@@ -11,13 +11,13 @@ interface QuizPreviewProps {
 
 const QuizPreview = ({ quiz, onClose }: QuizPreviewProps) => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [answers, setAnswers] = useState<number[]>([]);
+  const [answers, setAnswers] = useState<{ type: string; points: number }[]>([]);
   const [showResults, setShowResults] = useState(false);
 
   const currentQuestion = quiz.questions[currentQuestionIndex];
 
   const handleAnswer = (points: number) => {
-    const newAnswers = [...answers, points];
+    const newAnswers = [...answers, { type: currentQuestion.category, points }];
     setAnswers(newAnswers);
 
     if (currentQuestionIndex < quiz.questions.length - 1) {
@@ -28,8 +28,13 @@ const QuizPreview = ({ quiz, onClose }: QuizPreviewProps) => {
   };
 
   if (showResults) {
-    const totalScore = answers.reduce((sum, points) => sum + points, 0);
-    return <QuizResults quiz={quiz} score={totalScore} onClose={onClose} />;
+    // Calculate scores by type
+    const scoresByType = answers.reduce((acc, answer) => {
+      acc[answer.type] = (acc[answer.type] || 0) + answer.points;
+      return acc;
+    }, {} as { [key: string]: number });
+
+    return <QuizResults quiz={quiz} scores={scoresByType} onClose={onClose} />;
   }
 
   return (
