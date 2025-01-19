@@ -5,15 +5,19 @@ import QuizCreator from "@/components/QuizCreator";
 import QuizPreview from "@/components/QuizPreview";
 import { useToast } from "@/components/ui/use-toast";
 import { Quiz } from "@/types/quiz";
+import LandingPage from "@/components/LandingPage";
+import TestIntroduction from "@/components/TestIntroduction";
+
+type Step = "landing" | "introduction" | "creator" | "preview";
 
 const Index = () => {
+  const [currentStep, setCurrentStep] = useState<Step>("landing");
   const [quizData, setQuizData] = useState<Quiz>({
     title: "",
     description: "",
     questions: [],
     resultRanges: []
   });
-  const [showPreview, setShowPreview] = useState(false);
   const { toast } = useToast();
 
   const handleQuizCreate = (quiz: Quiz) => {
@@ -26,8 +30,21 @@ const Index = () => {
 
   const canPreview = quizData.questions.length > 0 && quizData.resultRanges.length > 0;
 
-  if (showPreview) {
-    return <QuizPreview quiz={quizData} onClose={() => setShowPreview(false)} />;
+  if (currentStep === "preview") {
+    return <QuizPreview quiz={quizData} onClose={() => setCurrentStep("creator")} />;
+  }
+
+  if (currentStep === "landing") {
+    return <LandingPage onStart={() => setCurrentStep("introduction")} />;
+  }
+
+  if (currentStep === "introduction") {
+    return (
+      <TestIntroduction 
+        onStart={() => setCurrentStep("creator")}
+        onBack={() => setCurrentStep("landing")}
+      />
+    );
   }
 
   return (
@@ -42,7 +59,7 @@ const Index = () => {
 
         <div className="flex justify-end">
           <Button
-            onClick={() => setShowPreview(true)}
+            onClick={() => setCurrentStep("preview")}
             disabled={!canPreview}
             variant="outline"
           >
