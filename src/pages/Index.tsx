@@ -1,21 +1,19 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
 import QuizCreator from "@/components/QuizCreator";
+import QuizPreview from "@/components/QuizPreview";
 import { useToast } from "@/components/ui/use-toast";
 import { Quiz } from "@/types/quiz";
 
 const Index = () => {
-  const [step, setStep] = useState(1);
   const [quizData, setQuizData] = useState<Quiz>({
     title: "",
     description: "",
     questions: [],
     resultRanges: []
   });
+  const [showPreview, setShowPreview] = useState(false);
   const { toast } = useToast();
 
   const handleQuizCreate = (quiz: Quiz) => {
@@ -24,9 +22,13 @@ const Index = () => {
       title: "Quiz Created!",
       description: "Your quiz has been created successfully.",
     });
-    // In a real app, we would save this to a database
-    console.log("Created quiz:", quiz);
   };
+
+  const canPreview = quizData.questions.length > 0 && quizData.resultRanges.length > 0;
+
+  if (showPreview) {
+    return <QuizPreview quiz={quizData} onClose={() => setShowPreview(false)} />;
+  }
 
   return (
     <div className="min-h-screen py-8 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
@@ -38,7 +40,17 @@ const Index = () => {
           </p>
         </div>
 
-        <Card className="glass-card p-6">
+        <div className="flex justify-end">
+          <Button
+            onClick={() => setShowPreview(true)}
+            disabled={!canPreview}
+            variant="outline"
+          >
+            Preview Quiz
+          </Button>
+        </div>
+
+        <Card className="p-6">
           <QuizCreator onQuizCreate={handleQuizCreate} />
         </Card>
       </div>
