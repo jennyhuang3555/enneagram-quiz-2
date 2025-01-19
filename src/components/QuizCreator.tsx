@@ -33,7 +33,7 @@ const QuizCreator = ({ onQuizCreate }: QuizCreatorProps) => {
   const [description, setDescription] = useState("");
   const [questions, setQuestions] = useState<Question[]>([]);
   const [resultRanges, setResultRanges] = useState<ResultRange[]>([]);
-  const [category, setCategory] = useState("core"); // Default category
+  const [category, setCategory] = useState(""); // Remove default "core" value
 
   const addQuestion = () => {
     setQuestions([
@@ -60,6 +60,7 @@ const QuizCreator = ({ onQuizCreate }: QuizCreatorProps) => {
         maxScore: 0,
         title: "",
         description: "",
+        category: "", // Added to associate ranges with specific types
       },
     ]);
   };
@@ -117,18 +118,22 @@ const QuizCreator = ({ onQuizCreate }: QuizCreatorProps) => {
       const jsonData = XLSX.utils.sheet_to_json(firstSheet);
       
       const newQuestions = jsonData.map((row: any) => {
-        // Safely handle the Type field, providing a default if undefined or invalid
-        let questionType = 'core';
-        if (row.Type && typeof row.Type === 'string') {
-          questionType = row.Type.toLowerCase();
-        } else if (row.type && typeof row.type === 'string') {
-          questionType = row.type.toLowerCase();
+        // Get the type from either Type or type column, with proper type checking
+        let questionType = '';
+        if (typeof row.Type === 'string') {
+          questionType = row.Type;
+        } else if (typeof row.type === 'string') {
+          questionType = row.type;
+        } else if (row.Type) {
+          questionType = String(row.Type); // Convert to string if it's a different type
+        } else if (row.type) {
+          questionType = String(row.type);
         }
 
         return {
           id: crypto.randomUUID(),
           text: row.Question || row.question || '',
-          category: questionType,
+          category: questionType || 'uncategorized', // Use the exact type from Excel
           options: SCORE_OPTIONS.map((option) => ({
             id: crypto.randomUUID(),
             text: option.label,
@@ -151,7 +156,7 @@ const QuizCreator = ({ onQuizCreate }: QuizCreatorProps) => {
       return {
         id: crypto.randomUUID(),
         text: question?.trim() || '',
-        category: type?.toLowerCase()?.trim() || 'core',
+        category: type?.trim() || 'uncategorized',
         options: SCORE_OPTIONS.map((option) => ({
           id: crypto.randomUUID(),
           text: option.label,
@@ -161,7 +166,7 @@ const QuizCreator = ({ onQuizCreate }: QuizCreatorProps) => {
     });
 
     setQuestions([...questions, ...newQuestions]);
-    event.target.value = ''; // Clear the textarea after processing
+    event.target.value = '';
   };
 
   return (

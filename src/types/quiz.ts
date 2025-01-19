@@ -15,6 +15,7 @@ export interface ResultRange {
   maxScore: number;
   title: string;
   description: string;
+  category: string; // Added to associate ranges with specific types
 }
 
 export interface Quiz {
