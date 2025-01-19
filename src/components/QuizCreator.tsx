@@ -116,16 +116,26 @@ const QuizCreator = ({ onQuizCreate }: QuizCreatorProps) => {
       const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
       const jsonData = XLSX.utils.sheet_to_json(firstSheet);
       
-      const newQuestions = jsonData.map((row: any) => ({
-        id: crypto.randomUUID(),
-        text: row.Question || '',
-        category: row.Type?.toLowerCase() || 'core',
-        options: SCORE_OPTIONS.map((option) => ({
+      const newQuestions = jsonData.map((row: any) => {
+        // Safely handle the Type field, providing a default if undefined or invalid
+        let questionType = 'core';
+        if (row.Type && typeof row.Type === 'string') {
+          questionType = row.Type.toLowerCase();
+        } else if (row.type && typeof row.type === 'string') {
+          questionType = row.type.toLowerCase();
+        }
+
+        return {
           id: crypto.randomUUID(),
-          text: option.label,
-          points: option.value,
-        })),
-      }));
+          text: row.Question || row.question || '',
+          category: questionType,
+          options: SCORE_OPTIONS.map((option) => ({
+            id: crypto.randomUUID(),
+            text: option.label,
+            points: option.value,
+          })),
+        };
+      });
 
       setQuestions([...questions, ...newQuestions]);
     };
