@@ -7,10 +7,11 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
+  RadarChart,
+  PolarGrid,
+  PolarAngleAxis,
+  PolarRadiusAxis,
+  Radar,
   ResponsiveContainer,
   Tooltip,
 } from "recharts";
@@ -40,11 +41,12 @@ const QuizResults = ({ quiz, scores, onClose }: QuizResultsProps) => {
     <Card className="p-6 max-w-4xl mx-auto space-y-6 animate-fade-in">
       <h2 className="text-2xl font-bold">Your Enneagram Results</h2>
       
-      <div className="h-[300px] w-full">
+      <div className="h-[400px] w-full">
         <ChartContainer config={config}>
-          <BarChart data={chartData}>
-            <XAxis dataKey="type" />
-            <YAxis />
+          <RadarChart data={chartData} outerRadius={150}>
+            <PolarGrid />
+            <PolarAngleAxis dataKey="type" />
+            <PolarRadiusAxis />
             <Tooltip
               content={({ active, payload }) => {
                 if (!active || !payload) return null;
@@ -57,8 +59,14 @@ const QuizResults = ({ quiz, scores, onClose }: QuizResultsProps) => {
                 );
               }}
             />
-            <Bar dataKey="score" fill="hsl(var(--primary))" />
-          </BarChart>
+            <Radar
+              name="Score"
+              dataKey="score"
+              fill="hsl(var(--primary))"
+              fillOpacity={0.6}
+              stroke="hsl(var(--primary))"
+            />
+          </RadarChart>
         </ChartContainer>
       </div>
 
