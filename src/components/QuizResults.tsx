@@ -2,11 +2,6 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Quiz } from "@/types/quiz";
 import {
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/components/ui/chart";
-import {
   RadarChart,
   PolarGrid,
   PolarAngleAxis,
@@ -84,9 +79,9 @@ const QuizResults = ({ quiz, scores, onClose }: QuizResultsProps) => {
     },
   ];
 
-  // Find dominant type
-  const dominantType = Object.entries(scores).reduce((a, b) => 
-    scores[a] > scores[b[0]] ? a : b[0]
+  // Find dominant type with proper type handling
+  const dominantType = Object.entries(scores).reduce<string>((a, [key, value]) => 
+    scores[a] > value ? a : key, Object.keys(scores)[0]
   );
 
   return (
@@ -105,8 +100,8 @@ const QuizResults = ({ quiz, scores, onClose }: QuizResultsProps) => {
             <Radar
               name="Score"
               dataKey="score"
-              stroke="#8884d8"
-              fill="#8884d8"
+              stroke={COLORS[dominantType as keyof typeof COLORS]}
+              fill={COLORS[dominantType as keyof typeof COLORS]}
               fillOpacity={0.6}
             />
             <Tooltip />
