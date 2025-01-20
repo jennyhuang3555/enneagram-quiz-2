@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -15,6 +15,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useLocalStorage } from "@/hooks/useLocalStorage";
 
 interface QuizCreatorProps {
   onQuizCreate: (quiz: Quiz) => void;
@@ -31,9 +32,16 @@ const SCORE_OPTIONS = [
 const QuizCreator = ({ onQuizCreate }: QuizCreatorProps) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [questions, setQuestions] = useState<Question[]>([]);
+  const [questions, setQuestions] = useLocalStorage<Question[]>("quiz-questions", []);
   const [resultRanges, setResultRanges] = useState<ResultRange[]>([]);
-  const [category, setCategory] = useState(""); // Remove default "core" value
+  const [category, setCategory] = useState("");
+
+  // Log changes to questions
+  useEffect(() => {
+    if (questions.length > 0) {
+      console.log(`Questions updated at ${new Date().toISOString()}:`, questions);
+    }
+  }, [questions]);
 
   const addQuestion = () => {
     setQuestions([
@@ -60,7 +68,7 @@ const QuizCreator = ({ onQuizCreate }: QuizCreatorProps) => {
         maxScore: 0,
         title: "",
         description: "",
-        category: "", // Added to associate ranges with specific types
+        category: "",
       },
     ]);
   };
@@ -118,14 +126,13 @@ const QuizCreator = ({ onQuizCreate }: QuizCreatorProps) => {
       const jsonData = XLSX.utils.sheet_to_json(firstSheet);
       
       const newQuestions = jsonData.map((row: any) => {
-        // Get the type from either Type or type column, with proper type checking
         let questionType = '';
         if (typeof row.Type === 'string') {
           questionType = row.Type;
         } else if (typeof row.type === 'string') {
           questionType = row.type;
         } else if (row.Type) {
-          questionType = String(row.Type); // Convert to string if it's a different type
+          questionType = String(row.Type);
         } else if (row.type) {
           questionType = String(row.type);
         }
@@ -133,7 +140,7 @@ const QuizCreator = ({ onQuizCreate }: QuizCreatorProps) => {
         return {
           id: crypto.randomUUID(),
           text: row.Question || row.question || '',
-          category: questionType || 'uncategorized', // Use the exact type from Excel
+          category: questionType || 'uncategorized',
           options: SCORE_OPTIONS.map((option) => ({
             id: crypto.randomUUID(),
             text: option.label,
@@ -174,7 +181,6 @@ const QuizCreator = ({ onQuizCreate }: QuizCreatorProps) => {
       <div className="space-y-4">
         <h2 className="text-2xl font-bold">Quiz Configuration</h2>
         
-        {/* Import Section */}
         <Card className="p-4 space-y-4">
           <h3 className="text-lg font-semibold">Import Questions</h3>
           

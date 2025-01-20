@@ -1,14 +1,6 @@
 import { useState } from "react";
 import QuizQuestion from "./QuizQuestion";
-
-// Sample questions - in a real app, these would come from your backend
-const QUESTIONS = [
-  "I tend to be organized and structured in my approach to life.",
-  "I often put others' needs before my own.",
-  "I value authenticity and expressing my true feelings.",
-  "I frequently seek new experiences and opportunities.",
-  "I prefer to observe and analyze before taking action.",
-];
+import { useLocalStorage } from "@/hooks/useLocalStorage"; // We'll create this hook
 
 interface QuestionsProps {
   onComplete: (scores: number[]) => void;
@@ -16,6 +8,14 @@ interface QuestionsProps {
 }
 
 const Questions = ({ onComplete, onBack }: QuestionsProps) => {
+  const [storedQuestions] = useLocalStorage<string[]>("quiz-questions", [
+    "I tend to be organized and structured in my approach to life.",
+    "I often put others' needs before my own.",
+    "I value authenticity and expressing my true feelings.",
+    "I frequently seek new experiences and opportunities.",
+    "I prefer to observe and analyze before taking action.",
+  ]);
+  
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [scores, setScores] = useState<number[]>([]);
 
@@ -23,7 +23,7 @@ const Questions = ({ onComplete, onBack }: QuestionsProps) => {
     const newScores = [...scores, score];
     setScores(newScores);
 
-    if (currentQuestion === QUESTIONS.length - 1) {
+    if (currentQuestion === storedQuestions.length - 1) {
       onComplete(newScores);
     } else {
       setCurrentQuestion(currentQuestion + 1);
@@ -41,9 +41,9 @@ const Questions = ({ onComplete, onBack }: QuestionsProps) => {
 
   return (
     <QuizQuestion
-      question={QUESTIONS[currentQuestion]}
+      question={storedQuestions[currentQuestion]}
       currentQuestion={currentQuestion}
-      totalQuestions={QUESTIONS.length}
+      totalQuestions={storedQuestions.length}
       onNext={handleNext}
       onPrevious={handlePrevious}
     />
