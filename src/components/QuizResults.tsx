@@ -35,24 +35,59 @@ const COLORS = {
 };
 
 const QuizResults = ({ quiz, scores, onClose }: QuizResultsProps) => {
-  const chartData = Object.entries(scores).map(([type, score]) => ({
-    type,
-    score,
-  }));
+  // Transform scores into chart data format
+  const chartData = [
+    {
+      subject: "Type 1",
+      score: scores.type1 || 0,
+      fullMark: 25,
+    },
+    {
+      subject: "Type 2",
+      score: scores.type2 || 0,
+      fullMark: 25,
+    },
+    {
+      subject: "Type 3",
+      score: scores.type3 || 0,
+      fullMark: 25,
+    },
+    {
+      subject: "Type 4",
+      score: scores.type4 || 0,
+      fullMark: 25,
+    },
+    {
+      subject: "Type 5",
+      score: scores.type5 || 0,
+      fullMark: 25,
+    },
+    {
+      subject: "Type 6",
+      score: scores.type6 || 0,
+      fullMark: 25,
+    },
+    {
+      subject: "Type 7",
+      score: scores.type7 || 0,
+      fullMark: 25,
+    },
+    {
+      subject: "Type 8",
+      score: scores.type8 || 0,
+      fullMark: 25,
+    },
+    {
+      subject: "Type 9",
+      score: scores.type9 || 0,
+      fullMark: 25,
+    },
+  ];
 
   // Find dominant type
   const dominantType = Object.entries(scores).reduce((a, b) => 
     scores[a] > scores[b[0]] ? a : b[0]
   );
-
-  const config = {
-    score: {
-      theme: {
-        light: "hsl(var(--primary))",
-        dark: "hsl(var(--primary))",
-      },
-    },
-  };
 
   return (
     <Card className="p-6 max-w-4xl mx-auto space-y-6 animate-fade-in bg-white/95 backdrop-blur">
@@ -62,40 +97,21 @@ const QuizResults = ({ quiz, scores, onClose }: QuizResultsProps) => {
       </p>
       
       <div className="h-[500px] w-full">
-        <ChartContainer config={config}>
-          <RadarChart data={chartData} outerRadius={200}>
-            <PolarGrid stroke="#e5e7eb" />
-            <PolarAngleAxis 
-              dataKey="type" 
-              tick={{ fill: '#6b7280', fontSize: 14 }}
-              tickFormatter={(value) => value.replace('type', 'Type ')}
+        <ResponsiveContainer width="100%" height="100%">
+          <RadarChart cx="50%" cy="50%" outerRadius="80%" data={chartData}>
+            <PolarGrid />
+            <PolarAngleAxis dataKey="subject" />
+            <PolarRadiusAxis angle={30} domain={[0, 25]} />
+            <Radar
+              name="Score"
+              dataKey="score"
+              stroke="#8884d8"
+              fill="#8884d8"
+              fillOpacity={0.6}
             />
-            <PolarRadiusAxis stroke="#9ca3af" />
-            <Tooltip
-              content={({ active, payload }) => {
-                if (!active || !payload) return null;
-                return (
-                  <ChartTooltipContent
-                    payload={payload}
-                    nameKey="type"
-                    labelKey="score"
-                  />
-                );
-              }}
-            />
-            {Object.keys(COLORS).map((type) => (
-              <Radar
-                key={type}
-                name={type.replace('type', 'Type ')}
-                dataKey="score"
-                stroke={COLORS[type as keyof typeof COLORS]}
-                fill={COLORS[type as keyof typeof COLORS]}
-                fillOpacity={0.6}
-                data={chartData.filter(item => item.type === type)}
-              />
-            ))}
+            <Tooltip />
           </RadarChart>
-        </ChartContainer>
+        </ResponsiveContainer>
       </div>
 
       <div className="space-y-4 mt-8">
@@ -115,7 +131,7 @@ const QuizResults = ({ quiz, scores, onClose }: QuizResultsProps) => {
               .map(range => {
                 if (score >= range.minScore && score <= range.maxScore) {
                   return (
-                    <div key={range.id} className="mt-2">
+                    <div key={range.id}>
                       <h4 className="font-medium">{range.title}</h4>
                       <p className="text-muted-foreground">{range.description}</p>
                     </div>
