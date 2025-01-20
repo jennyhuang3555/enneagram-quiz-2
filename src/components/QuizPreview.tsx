@@ -14,9 +14,11 @@ const QuizPreview = ({ quiz, onClose }: QuizPreviewProps) => {
   const [answers, setAnswers] = useState<{ type: string; points: number }[]>([]);
   const [showResults, setShowResults] = useState(false);
 
-  const currentQuestion = quiz.questions[currentQuestionIndex];
+  const currentQuestion: Question = quiz.questions[currentQuestionIndex];
 
   const handleAnswer = (points: number) => {
+    if (!currentQuestion) return;
+    
     const newAnswers = [...answers, { type: currentQuestion.category, points }];
     setAnswers(newAnswers);
 
@@ -28,13 +30,20 @@ const QuizPreview = ({ quiz, onClose }: QuizPreviewProps) => {
   };
 
   if (showResults) {
-    // Calculate scores by type
     const scoresByType = answers.reduce((acc, answer) => {
       acc[answer.type] = (acc[answer.type] || 0) + answer.points;
       return acc;
     }, {} as { [key: string]: number });
 
     return <QuizResults quiz={quiz} scores={scoresByType} onClose={onClose} />;
+  }
+
+  if (!currentQuestion) {
+    return (
+      <Card className="p-6 max-w-2xl mx-auto">
+        <p>No questions available.</p>
+      </Card>
+    );
   }
 
   return (
