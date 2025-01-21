@@ -1,0 +1,59 @@
+{
+  "questions": [
+    {
+      "id": "8674cb04-3051-4c7a-8683-a13ef3dfef0c",
+      "text": "\"I am deeply motivated by the need to be good and avoid mistakes.\"",
+      "category": 1
+    },
+    {
+      "id": "e48392aa-814d-4360-b186-a87d3ad5515d",
+      "text": "\"I feel a strong desire to be needed and valued by those around me.\"",
+      "category": 1
+    },
+    {
+      "id": "addf64c3-bee7-4231-8f4b-b90341617b9f",
+      "text": "\"I strive to be successful and avoid failure at all costs.\"",
+      "category": 1
+    },
+    {
+      "id": "358c424d-0729-42c9-9ce7-0b5d95584aeb",
+      "text": "\"I value expressing my individuality and being true to myself.\"",
+      "category": 1
+    },
+    {
+      "id": "540c9597-ed27-4569-99e0-0cccaeb6a0ac",
+      "text": "\"I feel the need to gather as much knowledge as I can before making decisions.\"",
+      "category": 1
+    },
+    {
+      "id": "def2c0b6-1e43-41fb-a0e9-96b8b2486b9b",
+      "text": "\"I feel more confident when I have clear guidelines or authority to rely on.\"",
+      "category": 1
+    },
+    {
+      "id": "393423b0-69f0-4389-baf4-bdf09ccfe631",
+      "text": "\"I crave new experiences and feel stifled by routine.\"",
+      "category": 1
+    },
+    {
+      "id": "0cd2f3e4-9873-46f7-b16e-6bd9fe6b30a3",
+      "text": "\"I dislike feeling vulnerable or dependent on others.\"",
+      "category": 1
+    },
+    {
+      "id": "9fa2713e-a7d1-4424-9127-7a60c66d4ce7",
+      "text": "\"I tend to merge with others’ priorities to avoid conflict or exerting myself too much.\"",
+      "category": 9
+    }
+  ],
+  "resultRanges": [
+    {
+      "id": "1",
+      "category": "type1",
+      "minScore": 0,
+      "maxScore": 25,
+      "title": "Result 1",
+      "description": "Description for result 1"
+    }
+  ]
+}

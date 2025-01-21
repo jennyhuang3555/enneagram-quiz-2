@@ -39,27 +39,14 @@ const Index = () => {
   const [currentStep, setCurrentStep] = useState<Step>("landing");
   const [quizScores, setQuizScores] = useState<{ [key: string]: number }>({});
 
-  const handleQuizComplete = (scores: number[]) => {
-    // Convert the array of scores into an object with type categories
-    const scoresByType = {
-      type1: scores[0] || 0,
-      type2: scores[1] || 0,
-      type3: scores[2] || 0,
-      type4: scores[3] || 0,
-      type5: scores[4] || 0,
-    };
-    
-    setQuizScores(scoresByType);
+  const handleQuizComplete = (scores: { [key: string]: number }) => {
+    setQuizScores(scores);
     setCurrentStep("results");
   };
 
   return (
     <div>
-      <div className="absolute top-4 right-4">
-        <Link to="/admin">
-          <Button variant="outline">Admin Panel</Button>
-        </Link>
-      </div>
+    
       
       {currentStep === "landing" && (
         <LandingPage onStart={() => setCurrentStep("introduction")} />
