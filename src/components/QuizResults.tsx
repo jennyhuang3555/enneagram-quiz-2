@@ -238,37 +238,10 @@ const QuizResults = ({ quiz, scores, onClose }: QuizResultsProps) => {
         </div>
       </div>
 
-      <div className="grid grid-cols-3 gap-4">
-        {Object.entries(scores)
-          .sort(([, a], [, b]) => b - a)
-          .map(([type, score]) => (
-            <div
-              key={type}
-              className={`p-4 rounded-lg border-2 ${
-                type === dominantType ? `ring-2 ring-offset-2 ring-[${TYPE_COLORS[type as keyof typeof TYPE_COLORS]}]` : ''
-              }`}
-              style={{ 
-                borderColor: TYPE_COLORS[type as keyof typeof TYPE_COLORS],
-                backgroundColor: `${TYPE_COLORS[type as keyof typeof TYPE_COLORS]}10`
-              }}
-            >
-              <h3 className="text-lg font-semibold" style={{ color: TYPE_COLORS[type as keyof typeof TYPE_COLORS] }}>
-                Type {type.replace('type', '')}
-                {type === dominantType && ' ★'}
-              </h3>
-              <p className="text-sm text-muted-foreground">
-                {TYPE_NAMES[type as keyof typeof TYPE_NAMES]}
-              </p>
-              <p className="text-2xl font-bold mt-2" style={{ color: TYPE_COLORS[type as keyof typeof TYPE_COLORS] }}>
-                {score}
-              </p>
-            </div>
-          ))}
-      </div>
 
       <Button 
         onClick={onClose} 
-        className="w-full mt-6"
+        className="w-full mt-10"
         style={{
           background: TYPE_COLORS[dominantTypeFormatted as keyof typeof TYPE_COLORS],
           color: 'white'
