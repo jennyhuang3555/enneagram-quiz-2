@@ -44,7 +44,45 @@ const TYPE_NAMES = {
   type9: "The Peacemaker",
 };
 
+interface TypeDescription {
+  title: string;
+  inNutshell: string;
+  motivationAndFears: string;
+  worldview: string;
+  blindSpots: string[];  // Array for bullet points
+  strengths: string[];   // Array for bullet points
+  triggers: string[];    // Array for bullet points
+  challengingPatterns: string[];
+  growthQuestions: string[];  // Array for bullet points
+  growthDescription: string;
+}
+
 const QuizResults = ({ quiz, scores, onClose }: QuizResultsProps) => {
+  // Add console logs to debug
+  console.log('Scores:', scores);
+  
+  const dominantType = Object.entries(scores)
+    .reduce((a, [key, value]) => {
+      return scores[a] > value ? a : key;
+    }, Object.keys(scores)[0]);
+  
+  console.log('Dominant Type:', dominantType);
+  
+  const dominantTypeDesc = typeDescriptions[dominantType as keyof typeof typeDescriptions];
+  console.log('Type Description:', dominantTypeDesc);
+
+  // Add a guard clause
+  if (!dominantTypeDesc) {
+    console.error('No type description found for:', dominantType);
+    return (
+      <div className="p-6">
+        <h3>Error loading results</h3>
+        <p>Could not find type description for {dominantType}</p>
+        <Button onClick={onClose}>Close</Button>
+      </div>
+    );
+  }
+
   // Ensure all types are included in chart data
   const chartData = Object.entries(TYPE_COLORS)
     .map(([type, color]) => ({
@@ -66,31 +104,21 @@ const QuizResults = ({ quiz, scores, onClose }: QuizResultsProps) => {
   });
 
   // Ensure dominantType is in correct format (type1, type2, etc.)
-  const dominantType = Object.entries(scores)
-    .reduce<string>((a, [key, value]) => {
-      // Ensure key starts with 'type'
-      const typeKey = key.startsWith('type') ? key : `type${key}`;
-      return scores[a] > value ? a : typeKey;
-    }, 'type1');
-
-  // Add safety check
-  const dominantTypeDesc = typeDescriptions[dominantType as keyof typeof typeDescriptions] 
-    || typeDescriptions.type1; // Fallback to type1 if something goes wrong
-
-  console.log('Dominant Type:', dominantType); // For debugging
-  console.log('Available Types:', Object.keys(typeDescriptions)); // For debugging
+  const dominantTypeFormatted = dominantType.startsWith('type') ? dominantType : `type${dominantType}`;
 
   return (
     <Card className="p-8 max-w-4xl mx-auto space-y-8 animate-fade-in bg-white/95 backdrop-blur">
       <div className="text-center space-y-4">
-        <h2 className="text-3xl font-bold">Your Enneagram Results</h2>
+        <h2 className="text-4xl font-bold text-center mb-8">
+          {dominantTypeDesc.title}
+        </h2>
         <p className="text-xl text-muted-foreground">
           Your dominant type is:{" "}
           <span 
             className="font-bold"
-            style={{ color: TYPE_COLORS[dominantType as keyof typeof TYPE_COLORS] }}
+            style={{ color: TYPE_COLORS[dominantTypeFormatted as keyof typeof TYPE_COLORS] }}
           >
-            Type {dominantType.replace('type', '')} - {TYPE_NAMES[dominantType as keyof typeof TYPE_NAMES]}
+            Type {dominantType.replace('type', '')} - {TYPE_NAMES[dominantTypeFormatted as keyof typeof TYPE_NAMES]}
           </span>
         </p>
       </div>
@@ -142,35 +170,71 @@ const QuizResults = ({ quiz, scores, onClose }: QuizResultsProps) => {
       </div>
 
       <div className="space-y-6 mt-8">
-        <h3 className="text-2xl font-bold" style={{ color: TYPE_COLORS[dominantType as keyof typeof TYPE_COLORS] }}>
-          Understanding Type {dominantType.replace('type', '')} - {dominantTypeDesc.title}
+        <h3 className="text-2xl font-bold" style={{ color: TYPE_COLORS[dominantTypeFormatted as keyof typeof TYPE_COLORS] }}>
+          Type {dominantType.replace('type', '')} - {dominantTypeDesc.title}
         </h3>
         
-        <div className="prose max-w-none">
-          <p className="text-lg leading-relaxed">{dominantTypeDesc.brief}</p>
-          
-          <h4 className="text-xl font-semibold mt-6">Common Behaviors</h4>
-          <ul className="list-disc pl-5">
-            {dominantTypeDesc.behaviors.map((behavior, index) => (
-              <li key={index}>{behavior}</li>
-            ))}
-          </ul>
+        <div className="prose max-w-none space-y-6">
+          <section>
+            <h4 className="text-2xl font-semibold mb-4">In a Nutshell</h4>
+            <p className="text-xl">{dominantTypeDesc.inNutshell}</p>
+          </section>
 
-          <h4 className="text-xl font-semibold mt-6">Key Strengths</h4>
-          <ul className="list-disc pl-5">
-            {dominantTypeDesc.strengths.map((strength, index) => (
-              <li key={index}>{strength}</li>
-            ))}
-          </ul>
+          <section>
+            <h4 className="text-2xl font-semibold mb-4">Motivation and Core Fears</h4>
+            <p className="text-xl">{dominantTypeDesc.motivationAndFears}</p>
+          </section>
 
-          <h4 className="text-xl font-semibold mt-6">Core Motivations</h4>
-          <p>{dominantTypeDesc.coreMotivations}</p>
+          <section>
+            <h4 className="text-2xl font-semibold mb-4">Worldview and Focus of Attention</h4>
+            <p className="text-xl">{dominantTypeDesc.worldview}</p>
+          </section>
 
-          <h4 className="text-xl font-semibold mt-6">Triggers and Stress Responses</h4>
-          <p>{dominantTypeDesc.stressResponses}</p>
+          <section>
+            <h4 className="text-2xl font-semibold mb-4">Blind Spots</h4>
+            <ul className="list-disc pl-5 space-y-3">
+              {dominantTypeDesc.blindSpots.map((item, index) => (
+                <li key={index} className="text-xl">{item}</li>
+              ))}
+            </ul>
+          </section>
 
-          <h4 className="text-xl font-semibold mt-6">How Others Relate to You</h4>
-          <p>{dominantTypeDesc.relationships}</p>
+          <section>
+            <h4 className="text-2xl font-semibold mb-4">Strengths and Gifts</h4>
+            <ul className="list-disc pl-5 space-y-3">
+              {dominantTypeDesc.strengths.map((item, index) => (
+                <li key={index} className="text-xl">{item}</li>
+              ))}
+            </ul>
+          </section>
+
+          <section>
+            <h4 className="text-2xl font-semibold mb-4">Triggers</h4>
+            <ul className="list-disc pl-5 space-y-3">
+              {dominantTypeDesc.triggers.map((item, index) => (
+                <li key={index} className="text-xl">{item}</li>
+              ))}
+            </ul>
+          </section>
+
+          <section>
+            <h4 className="text-2xl font-semibold mb-4">Challenging Patterns</h4>
+            <ul className="list-disc pl-5 space-y-3">
+              {dominantTypeDesc.challengingPatterns.map((item, index) => (
+                <li key={index} className="text-xl">{item}</li>
+              ))}
+            </ul>
+          </section>
+
+          <section>
+            <h4 className="text-2xl font-semibold mb-4">Growth Questions</h4>
+            <p className="text-xl mb-4">{dominantTypeDesc.growthDescription}</p>
+            <ul className="list-disc pl-5 space-y-3">
+              {dominantTypeDesc.growthQuestions.slice(2).map((item, index) => (
+                <li key={index} className="text-xl">{item}</li>
+              ))}
+            </ul>
+          </section>
         </div>
       </div>
 
@@ -206,7 +270,7 @@ const QuizResults = ({ quiz, scores, onClose }: QuizResultsProps) => {
         onClick={onClose} 
         className="w-full mt-6"
         style={{
-          background: TYPE_COLORS[dominantType as keyof typeof TYPE_COLORS],
+          background: TYPE_COLORS[dominantTypeFormatted as keyof typeof TYPE_COLORS],
           color: 'white'
         }}
       >
