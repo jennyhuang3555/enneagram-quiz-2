@@ -33,11 +33,11 @@ const TYPE_COLORS = {
 };
 
 const TYPE_NAMES = {
-  type1: "The Reformer",
+  type1: "The Perfectionist",
   type2: "The Helper",
   type3: "The Achiever",
   type4: "The Individualist",
-  type5: "The Investigator",
+  type5: "The Observer",
   type6: "The Loyalist",
   type7: "The Enthusiast",
   type8: "The Challenger",
