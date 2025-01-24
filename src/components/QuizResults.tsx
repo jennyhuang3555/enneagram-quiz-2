@@ -109,7 +109,7 @@ const QuizResults = ({ quiz, scores, onClose }: QuizResultsProps) => {
   return (
     <Card className="p-8 max-w-4xl mx-auto space-y-8 animate-fade-in bg-white/95 backdrop-blur">
       <div className="text-center space-y-4">
-        <h2 className="text-4xl font-bold text-center mb-8">
+        <h2 className="text-4xl font-bold text-center mb-8 bg-gradient-to-r from-purple-500 to-pink-500 text-transparent bg-clip-text">
           {dominantTypeDesc.title}
         </h2>
         <p className="text-xl text-muted-foreground">
@@ -170,82 +170,93 @@ const QuizResults = ({ quiz, scores, onClose }: QuizResultsProps) => {
       </div>
 
       <div className="space-y-6 mt-8">
-        <h3 className="text-2xl font-bold" style={{ color: TYPE_COLORS[dominantTypeFormatted as keyof typeof TYPE_COLORS] }}>
-          Type {dominantType.replace('type', '')} - {dominantTypeDesc.title}
+        <h3 className="text-4xl font-bold bg-gradient-to-r from-purple-500 to-pink-500 text-transparent bg-clip-text">
+          {dominantTypeDesc.title}
         </h3>
         
         <div className="prose max-w-none space-y-6">
           <section>
-            <h4 className="text-2xl font-semibold mb-4">In a Nutshell</h4>
-            <p className="text-xl">{dominantTypeDesc.inNutshell}</p>
+            <h4 className="text-2xl font-semibold mb-4 bg-gradient-to-r from-purple-500 to-pink-500 text-transparent bg-clip-text">
+              In a Nutshell
+            </h4>
+            <p className="text-xl text-gray-600">{dominantTypeDesc.inNutshell}</p>
           </section>
 
           <section>
-            <h4 className="text-2xl font-semibold mb-4">Motivation and Core Fears</h4>
-            <p className="text-xl">{dominantTypeDesc.motivationAndFears}</p>
+            <h4 className="text-2xl font-semibold mb-4 bg-gradient-to-r from-purple-500 to-pink-500 text-transparent bg-clip-text">
+              Motivation and Core Fears
+            </h4>
+            <p className="text-xl text-gray-600">{dominantTypeDesc.motivationAndFears}</p>
           </section>
 
           <section>
-            <h4 className="text-2xl font-semibold mb-4">Worldview and Focus of Attention</h4>
-            <p className="text-xl">{dominantTypeDesc.worldview}</p>
+            <h4 className="text-2xl font-semibold mb-4 bg-gradient-to-r from-purple-500 to-pink-500 text-transparent bg-clip-text">
+              Worldview and Focus of Attention
+            </h4>
+            <p className="text-xl text-gray-600">{dominantTypeDesc.worldview}</p>
           </section>
 
           <section>
-            <h4 className="text-2xl font-semibold mb-4">Blind Spots</h4>
+            <h4 className="text-2xl font-semibold mb-4 bg-gradient-to-r from-purple-500 to-pink-500 text-transparent bg-clip-text">
+              Blind Spots
+            </h4>
             <ul className="list-disc pl-5 space-y-3">
               {dominantTypeDesc.blindSpots.map((item, index) => (
-                <li key={index} className="text-xl">{item}</li>
+                <li key={index} className="text-xl text-gray-600">{item}</li>
               ))}
             </ul>
           </section>
 
           <section>
-            <h4 className="text-2xl font-semibold mb-4">Strengths and Gifts</h4>
+            <h4 className="text-2xl font-semibold mb-4 bg-gradient-to-r from-purple-500 to-pink-500 text-transparent bg-clip-text">
+              Strengths and Gifts
+            </h4>
             <ul className="list-disc pl-5 space-y-3">
               {dominantTypeDesc.strengths.map((item, index) => (
-                <li key={index} className="text-xl">{item}</li>
+                <li key={index} className="text-xl text-gray-600">{item}</li>
               ))}
             </ul>
           </section>
 
           <section>
-            <h4 className="text-2xl font-semibold mb-4">Triggers</h4>
+            <h4 className="text-2xl font-semibold mb-4 bg-gradient-to-r from-purple-500 to-pink-500 text-transparent bg-clip-text">
+              Triggers
+            </h4>
             <ul className="list-disc pl-5 space-y-3">
               {dominantTypeDesc.triggers.map((item, index) => (
-                <li key={index} className="text-xl">{item}</li>
+                <li key={index} className="text-xl text-gray-600">{item}</li>
               ))}
             </ul>
           </section>
 
           <section>
-            <h4 className="text-2xl font-semibold mb-4">Challenging Patterns</h4>
+            <h4 className="text-2xl font-semibold mb-4 bg-gradient-to-r from-purple-500 to-pink-500 text-transparent bg-clip-text">
+              Challenging Patterns
+            </h4>
             <ul className="list-disc pl-5 space-y-3">
               {dominantTypeDesc.challengingPatterns.map((item, index) => (
-                <li key={index} className="text-xl">{item}</li>
+                <li key={index} className="text-xl text-gray-600">{item}</li>
               ))}
             </ul>
           </section>
 
           <section>
-            <h4 className="text-2xl font-semibold mb-4">Growth Questions</h4>
-            <p className="text-xl mb-4">{dominantTypeDesc.growthDescription}</p>
+            <h4 className="text-2xl font-semibold mb-4 bg-gradient-to-r from-purple-500 to-pink-500 text-transparent bg-clip-text">
+              Growth Questions
+            </h4>
+            <p className="text-xl text-gray-600 mb-4">{dominantTypeDesc.growthDescription}</p>
             <ul className="list-disc pl-5 space-y-3">
               {dominantTypeDesc.growthQuestions.slice(2).map((item, index) => (
-                <li key={index} className="text-xl">{item}</li>
+                <li key={index} className="text-xl text-gray-600">{item}</li>
               ))}
             </ul>
           </section>
         </div>
       </div>
 
-
       <Button 
         onClick={onClose} 
-        className="w-full mt-10"
-        style={{
-          background: TYPE_COLORS[dominantTypeFormatted as keyof typeof TYPE_COLORS],
-          color: 'white'
-        }}
+        className="w-full py-4 px-6 rounded-lg font-semibold text-white bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 transition-colors"
       >
         Take Quiz Again
       </Button>
