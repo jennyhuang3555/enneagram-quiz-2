@@ -88,19 +88,29 @@ const QuizResults = ({ quiz, scores, onClose }: QuizResultsProps) => {
     .map(([type, color]) => ({
       name: `Type ${type.replace('type', '')}`,
       value: scores[type] || 0,
-      normalizedValue: scores[type] || 0, // Will be adjusted after sorting
-      color: color
+      normalizedValue: scores[type] || 0,
+      color: color,
+      isDominant: type === dominantType
     }))
-    .sort((a, b) => b.value - a.value);
+    .sort((a, b) => {
+      // Always put dominant type first
+      if (a.isDominant) return -1;
+      if (b.isDominant) return 1;
+      // Then sort others by value
+      return b.value - a.value;
+    });
 
-  // Calculate normalized values after sorting
+  // Calculate normalized values
   const maxScore = Math.max(...chartData.map(item => item.value));
   const minScore = Math.min(...chartData.map(item => item.value));
   const range = maxScore - minScore || 1; // Prevent division by zero
 
-  // Update normalized values
+  // Update normalized values to max out at 90%
   chartData.forEach(item => {
-    item.normalizedValue = 5 + ((item.value - minScore) / range * 95);
+    // Convert to percentage between 0-90
+    const normalizedValue = ((item.value - minScore) / range) * 90;
+    // Ensure minimum of 5% for visibility
+    item.normalizedValue = Math.max(5, normalizedValue);
   });
 
   // Ensure dominantType is in correct format (type1, type2, etc.)

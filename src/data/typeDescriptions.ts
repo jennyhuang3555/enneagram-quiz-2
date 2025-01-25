@@ -3,8 +3,8 @@ export const typeDescriptions = {
   "type1": {
     "title": "Type 1: The Perfectionist",
     "inNutshell": "The Type 1 archetype is the principled reformer and perfectionist who moves through the world with a keen eye for improvement and a deep sense of responsibility. These individuals naturally assume the role of refining and correcting, driven by an inner moral compass that constantly points toward what \"should be.\"",
-    "motivationAndFears": "This style stems from the need to be good, right, and beyond criticism. At their core, 1s carry a deep fear of being corrupt, defective, or morally wrong. This drives them to strive for perfection in their environment, often through meticulous attention to detail and rigid adherence to internal standards.",
-    "worldview": "1s see the world through a lens of ideals and standards - how things should be versus how they are. Their attention naturally goes to detecting flaws and imperfections in themselves, others, and their environment, constantly scanning for what needs to be improved or corrected.",
+    "motivationAndFears": "This style stems from the need to be good, right, and beyond criticism. At their core, 1s carry a deep fear of being corrupt, defective, or morally wrong. This drives them to strive for perfection in their environment, often through meticulous attention to detail and rigid adherence to internal standards.\r\n\r\nThe 1's corrective strategies emerged early in life when they internalized that making mistakes was unacceptable and that they needed to be \"the good child.\" This understanding leads to behaviors like constant self-monitoring, critiquing their environment, and maintaining high standards to prevent any possibility of being wrong or corrupt.\r\n\r\n1s see the world through a lens of ideals and standards - how things should be versus how they are. Their attention naturally goes to detecting flaws and imperfections in themselves, others, and their environment, constantly scanning for what needs to be improved or corrected.",
+    "worldview": "They maintain a should/shouldn't worldview where actions and situations are often categorized as right or wrong, correct or incorrect, proper or improper. Their focus tends toward identifying what needs improvement and maintaining personal integrity.",
     "blindSpots": [
       "Emotional Impact Blindness - 1s often have a significant blind spot around how their constant correction and criticism affects others emotionally. They may be genuinely surprised to learn that their \"helpful suggestions\" are experienced as harsh judgment, believing they're simply helping others improve.",
       "Rigidity Recognition Gap - There's frequently a blind spot around their own inflexibility. 1s may not recognize how their strict adherence to rules and standards can create unnecessary tension and restrict possibilities for creative solutions.",
@@ -44,8 +44,8 @@ export const typeDescriptions = {
   "type2": {
     "title": "Type 2: The Helper",
     "inNutshell": "The Type 2 archetype is the empathetic helper and nurturer who moves through life attuned to others' needs and emotions. These individuals naturally assume the role of supporting and caring for others, finding their sense of value through being essential in others' lives.",
-    "motivationAndFears": "This style stems from the need to be needed and loved. At their core, 2s carry a deep fear of being unwanted, unworthy of love, or dispensable. This drives them to make themselves indispensable to others, often through anticipating and meeting needs before they're expressed.",
-    "worldview": "2s see the world through a lens of relationships and needs - who needs what and how they can help. Their attention naturally goes to detecting emotional and practical needs in others, constantly scanning for opportunities to be helpful and valued.",
+    "motivationAndFears": "This style stems from the need to be needed and loved. At their core, 2s carry a deep fear of being unwanted, unworthy of love, or dispensable. This drives them to make themselves indispensable to others, often through anticipating and meeting needs before they're expressed.\r\n\r\nThe 2's helping strategies emerged early in life when they learned that love was conditional and needs had to be earned. This understanding leads to behaviors like emotional caregiving, self-sacrifice, and maintaining relationships through becoming essential to others' wellbeing.",
+    "worldview": "2s see the world through a lens of relationships and needs - who needs what and how they can help. Their attention naturally goes to detecting emotional and practical needs in others, constantly scanning for opportunities to be helpful and valued.\r\nThey maintain a relationship-centered worldview where situations are often evaluated based on how they affect connections and others' wellbeing. Their focus tends toward reading emotional cues and positioning themselves as helpful.",
     "blindSpots": [
       "2s often overlook their own needs. They are so focused on others that they can be surprised when their energy or emotional reserves are depleted.",
       "Helping can become controlling for 2s. They are often unaware of how their efforts might create guilt or obligations in others, as they use helping to maintain connection.",
@@ -85,7 +85,7 @@ export const typeDescriptions = {
   "type3": {
     "title": "Type 3: The Achiever",
     "inNutshell": "The Type 3 archetype is the driven achiever and performer who moves through life focused on success and recognition. These individuals naturally shape themselves to embody excellence and admirable qualities, driven by an acute awareness of goals and image.",
-    "motivationAndFears": "This style stems from the need to be valuable and successful. At their core, 3s carry a deep fear of being worthless, unsuccessful, or exposed as fraudulent. This drives them to constantly achieve and adapt their image to what will bring the most success and admiration.",
+    "motivationAndFears": "This style stems from the need to be valuable and successful. At their core, 3s carry a deep fear of being worthless, unsuccessful, or exposed as fraudulent. This drives them to constantly achieve and adapt their image to what will bring the most success and admiration.\r\n\r\nThe 3's achieving strategies emerged early in life when they learned that love and acceptance came through accomplishments rather than authentic self-expression. This leads to behaviors like relentless goal pursuit, image cultivation, and efficient performance.",
     "worldview": "3s see the world through a lens of goals and achievements - what constitutes success and how to attain it. Their attention naturally goes to detecting what others value and identifying paths to success, constantly scanning for opportunities to shine and advance.",
     "blindSpots": [
       "Disconnect from Authenticity: 3s often lose sight of their true feelings and desires, focusing instead on maintaining their successful image.",
@@ -255,9 +255,9 @@ export const typeDescriptions = {
   },
   "type7": {
     "title": "Type 7: The Enthusiast",
-    "inNutshell": "",
-    "motivationAndFears": "",
-    "worldview": "",
+    "inNutshell": "The Type 7 archetype is the enthusiastic visionary and adventurer who thrives on new experiences and possibilities. These individuals bring energy, creativity, and optimism to life, driven by a desire to avoid pain and maximize enjoyment.",
+    "motivationAndFears": "This style is fueled by the need to avoid pain and limitation while seeking satisfaction and joy. At their core, 7s fear being trapped in discomfort, boredom, or emotional pain. They strive to maintain freedom and pursue new opportunities to keep life exciting.",
+    "worldview": "7s see the world as a playground of possibilities, focusing on opportunities, enjoyable experiences, and ways to avoid unpleasant emotions. Their attention naturally goes to future plans, stimulating ideas, and what could bring excitement or satisfaction.",
     "blindSpots": [
       "Avoiding Pain Limits Growth: 7s often don’t see how their habit of avoiding discomfort or difficult emotions prevents them from experiencing true depth and growth.",
       "Fear of Commitment: 7s may not notice how their resistance to staying with one plan or decision keeps them from deeper fulfillment and stability.",
@@ -299,8 +299,8 @@ export const typeDescriptions = {
   "type8": {
     "title": "Type 8: The Challenger",
     "inNutshell": "The Type 8 archetype is the strong protector and challenger who moves against the world with direct force and intensity. These individuals naturally assume a powerful stance, taking up space both physically and energetically while wielding their strength to protect themselves and others they deem worthy of their loyalty.",
-    "motivationAndFears": "This style stems from the need to be strong and avoid vulnerability. At their core, 8s carry a deep fear of being controlled, violated, or taken advantage of. This drives them to establish dominance and control in their environment, often through direct confrontation and displays of strength.",
-    "worldview": "8s see the world through a lens of power dynamics - who has it, who doesn't, and how it's being used. Their attention naturally goes to detecting weakness and strength in situations and people, constantly scanning for potential threats or attempts to control them.",
+    "motivationAndFears": "This style stems from the need to be strong and avoid vulnerability. At their core, 8s carry a deep fear of being controlled, violated, or taken advantage of. This drives them to establish dominance and control in their environment, often through direct confrontation and displays of strength.\r\n\r\nThe 8's protective strategies emerged early in life when they learned that the world could be hostile and that weakness could lead to harm. This understanding leads to behaviors like testing others' strength, controlling their environment, and maintaining a tough exterior to prevent any exploitation of perceived softness.",
+    "worldview": "8s see the world through a lens of power dynamics - who has it, who doesn't, and how it's being used. Their attention naturally goes to detecting weakness and strength in situations and people, constantly scanning for potential threats or attempts to control them.\r\n\r\nThey maintain a black-and-white worldview where people and situations are often categorized as either strong or weak, friend or foe, trustworthy or suspicious. Their focus tends toward sizing up power dynamics in any room they enter and identifying potential challenges to their autonomy.",
     "blindSpots": [
       "8s often miss their own impact on others, unaware of how their intensity can be overwhelming or intimidating. They frequently overlook the softer emotions in themselves and others, missing opportunities for connection through vulnerability.",
       "They may be blind to their own need for tenderness and the ways they push people away through their confrontational style. Their dismissal of weakness can prevent them from acknowledging their own limitations and needs for support."
@@ -338,9 +338,9 @@ export const typeDescriptions = {
   },
   "type9": {
     "title": "Type 9: The Peacemaker",
-    "inNutshell": "",
-    "motivationAndFears": "",
-    "worldview": "",
+    "inNutshell": "The Type 9 archetype is the peaceful mediator and harmonizer who values unity and seeks to maintain inner and outer peace. These individuals excel at fostering connection and avoiding conflict, driven by a desire for comfort and stability.",
+    "motivationAndFears": "This style is rooted in the need for peace, harmony, and belonging. At their core, 9s fear disconnection, conflict, or loss of their sense of stability. They are motivated to create and preserve a peaceful environment and avoid being overlooked.",
+    "worldview": "9s see the world as a place where unity and ease should be prioritized. Their attention naturally focuses on maintaining comfort, avoiding conflict, and going with the flow. They often merge with others’ agendas to keep the peace.",
     "blindSpots": [
       "Type 9s are often blind to their self-neglect, failing to recognize how prioritizing others diminishes their own needs and desires. Their conflict avoidance keeps them from seeing how unresolved issues grow over time. They may not notice their passivity patterns, which lead to stagnation, or their emotional disconnection, which limits deeper engagement with life.",
       "Self-Neglect - Often unaware of how prioritizing others leads to ignoring their own needs and desires.",
