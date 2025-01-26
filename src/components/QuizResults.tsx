@@ -264,6 +264,84 @@ const QuizResults = ({ quiz, scores, onClose }: QuizResultsProps) => {
         </div>
       </div>
 
+      {/* Second and Third Highest Types */}
+      <div className="mt-12 space-y-8">
+        <h3 className="text-3xl font-semibold text-gray-700">
+          You also resonate with Type {chartData[1].name.replace('Type ', '')} ({TYPE_NAMES[`type${chartData[1].name.replace('Type ', '')}` as keyof typeof TYPE_NAMES]}) 
+          and Type {chartData[2].name.replace('Type ', '')} ({TYPE_NAMES[`type${chartData[2].name.replace('Type ', '')}` as keyof typeof TYPE_NAMES]})
+        </h3>
+
+        {/* Second Highest Type */}
+        <section className="space-y-6 bg-gray-50 p-6 rounded-lg">
+          <h4 className="text-2xl font-bold bg-gradient-to-r from-purple-500 to-pink-500 text-transparent bg-clip-text">
+            Type {chartData[1].name.replace('Type ', '')} - {TYPE_NAMES[`type${chartData[1].name.replace('Type ', '')}` as keyof typeof TYPE_NAMES]}
+          </h4>
+          <div className="space-y-6">
+            <section>
+              <h5 className="text-xl font-semibold mb-3 bg-gradient-to-r from-purple-500 to-pink-500 text-transparent bg-clip-text">
+                In a Nutshell
+              </h5>
+              <p className="text-lg text-gray-600">
+                {typeDescriptions[`type${chartData[1].name.replace('Type ', '')}` as keyof typeof typeDescriptions].inNutshell}
+              </p>
+            </section>
+            
+            <section>
+              <h5 className="text-xl font-semibold mb-3 bg-gradient-to-r from-purple-500 to-pink-500 text-transparent bg-clip-text">
+                Motivation and Core Fears
+              </h5>
+              <p className="text-lg text-gray-600">
+                {typeDescriptions[`type${chartData[1].name.replace('Type ', '')}` as keyof typeof typeDescriptions].motivationAndFears}
+              </p>
+            </section>
+            
+            <section>
+              <h5 className="text-xl font-semibold mb-3 bg-gradient-to-r from-purple-500 to-pink-500 text-transparent bg-clip-text">
+                Worldview and Focus of Attention
+              </h5>
+              <p className="text-lg text-gray-600">
+                {typeDescriptions[`type${chartData[1].name.replace('Type ', '')}` as keyof typeof typeDescriptions].worldview}
+              </p>
+            </section>
+          </div>
+        </section>
+
+        {/* Third Highest Type */}
+        <section className="space-y-6 bg-gray-50 p-6 rounded-lg">
+          <h4 className="text-2xl font-bold bg-gradient-to-r from-purple-500 to-pink-500 text-transparent bg-clip-text">
+            Type {chartData[2].name.replace('Type ', '')} - {TYPE_NAMES[`type${chartData[2].name.replace('Type ', '')}` as keyof typeof TYPE_NAMES]}
+          </h4>
+          <div className="space-y-6">
+            <section>
+              <h5 className="text-xl font-semibold mb-3 bg-gradient-to-r from-purple-500 to-pink-500 text-transparent bg-clip-text">
+                In a Nutshell
+              </h5>
+              <p className="text-lg text-gray-600">
+                {typeDescriptions[`type${chartData[2].name.replace('Type ', '')}` as keyof typeof typeDescriptions].inNutshell}
+              </p>
+            </section>
+            
+            <section>
+              <h5 className="text-xl font-semibold mb-3 bg-gradient-to-r from-purple-500 to-pink-500 text-transparent bg-clip-text">
+                Motivation and Core Fears
+              </h5>
+              <p className="text-lg text-gray-600">
+                {typeDescriptions[`type${chartData[2].name.replace('Type ', '')}` as keyof typeof typeDescriptions].motivationAndFears}
+              </p>
+            </section>
+            
+            <section>
+              <h5 className="text-xl font-semibold mb-3 bg-gradient-to-r from-purple-500 to-pink-500 text-transparent bg-clip-text">
+                Worldview and Focus of Attention
+              </h5>
+              <p className="text-lg text-gray-600">
+                {typeDescriptions[`type${chartData[2].name.replace('Type ', '')}` as keyof typeof typeDescriptions].worldview}
+              </p>
+            </section>
+          </div>
+        </section>
+      </div>
+
       <Button 
         onClick={onClose} 
         className="w-full py-4 px-6 rounded-lg font-semibold text-white bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 transition-colors"
