@@ -13,11 +13,11 @@ interface QuizQuestionProps {
 }
 
 const ANSWER_OPTIONS = [
-  { label: "Not Me at All", score: 0 },
-  { label: "Rarely Me", score: 1 },
-  { label: "Sometimes Me", score: 2 },
-  { label: "Often Me", score: 3 },
-  { label: "Definitely Me", score: 4 },
+  { label: "Strongly Disagree", score: 0 },
+  { label: "Disagree", score: 1 },
+  { label: "Neutral", score: 2 },
+  { label: "Agree", score: 3 },
+  { label: "Strongly Agree", score: 4 },
 ];
 
 const QuizQuestion = ({

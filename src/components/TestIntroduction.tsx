@@ -21,10 +21,10 @@ const TestIntroduction = ({ onStart, onBack }: TestIntroductionProps) => {
           <div className="bg-purple-50 p-4 rounded-lg space-y-2">
             <h3 className="font-semibold text-purple-800">How it works:</h3>
             <ul className="space-y-2 text-purple-700">
-              <li>• Answer each question honestly and spontaneously</li>
+              <li>• Answer each question honestly, reflecting on your life as a whole</li>
               <li>• There are no right or wrong answers</li>
               <li>• Your responses will determine your type calculation</li>
-              <li>• The test takes about 10-15 minutes to complete</li>
+              <li>• The test takes about 15-20 minutes to complete</li>
             </ul>
           </div>
         </div>
