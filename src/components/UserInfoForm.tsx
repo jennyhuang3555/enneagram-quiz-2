@@ -4,17 +4,17 @@ import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
 
 interface UserInfoFormProps {
-  scores: { [key: string]: number };
-  onSubmit: (name: string, email: string) => void;
+  onSubmit: (userInfo: { name: string; email: string }) => void;
 }
 
-const UserInfoForm = ({ scores, onSubmit }: UserInfoFormProps) => {
+const UserInfoForm = ({ onSubmit }: UserInfoFormProps) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onSubmit(name, email);
+    console.log('Submitting user info:', { name, email });
+    onSubmit({ name, email });
   };
 
   return (

@@ -1,273 +1,273 @@
 {
   "questions": [
     {
-      "id": "75f43eb3-9778-4dd7-b839-aa092d18fe2c",
+      "id": "d47028e5-bdfe-4428-afa8-e0d5b25fa9a4",
       "text": "\"I find it difficult to relax when I see something that needs improvement or fixing.\"",
       "category": 1
     },
     {
-      "id": "d1fed042-d818-4dc5-8b08-4a085121d3d3",
+      "id": "e1ccc1ef-6c8a-4524-8f63-db637429faf3",
       "text": "\"I feel strongly that fairness and justice should be upheld as a matter of principle.\"",
       "category": 1
     },
     {
-      "id": "fdcc899a-a917-4a79-9c9a-2cd46aa0a791",
+      "id": "f7d0c621-b7bf-4458-86e7-cf64cc927da8",
       "text": "\"I often feel a moral obligation to meet higher standards than I expect from others.\"",
       "category": 1
     },
     {
-      "id": "06290b4f-1864-477e-bbc5-7fb0bdfe1b10",
+      "id": "19498b6b-ede9-4922-8918-c8681b1c5535",
       "text": "\"I feel unsettled when things don’t meet my standards of order and correctness.\"",
       "category": 1
     },
     {
-      "id": "2b5bb833-cb12-4f46-8d52-ed69ba303e70",
+      "id": "c8e86637-430e-40be-937a-1334688abfbd",
       "text": "\"I believe that rules, structure, and doing what’s right are essential for creating a better world.\"",
       "category": 1
     },
     {
-      "id": "b20ea443-18c3-46ea-b4f9-98a4108f60db",
+      "id": "523889e0-d319-40d3-9bcf-b97a2a96db10",
       "text": "\"I feel frustrated when things or people don’t live up to the standards I hold.\"",
       "category": 1
     },
     {
-      "id": "db71cb79-0ede-4b34-a269-5a12f108b0fc",
+      "id": "764e382c-d251-40f1-90ce-d9d72f297d1c",
       "text": "\"I often neglect my own needs because I feel fulfilled when I’m making others feel loved and supported.\"",
       "category": 2
     },
     {
-      "id": "a6484b1f-89b1-4ce9-b327-20f1b0ebeaf3",
+      "id": "93097d62-2ef0-47e1-a9ac-b556c60c2ff0",
       "text": "\"I feel happiest when I’m making someone else’s life easier or better, and it's appreciated.\"",
       "category": 2
     },
     {
-      "id": "6de56516-bd55-4cbb-b82f-f5762854804a",
+      "id": "991ef82e-a94b-4a19-9a55-a1657d8cc828",
       "text": "\"I sometimes feel hurt if my efforts to help others are not acknowledged.\"",
       "category": 2
     },
     {
-      "id": "45b5cb79-fb6c-4914-910d-e47ac32490a0",
+      "id": "47c8ef4a-83fb-4f79-be8c-14f8fcea5a65",
       "text": "\"I often anticipate others’ needs before they even ask for help.\"",
       "category": 2
     },
     {
-      "id": "b3330339-5a71-4721-8320-6e72b1e17159",
-      "text": "\"I instinctively notice when someone needs support and feel drawn to help them.\"\r\n",
+      "id": "8c755d8d-5d8a-4370-8a05-14b0fd9d0987",
+      "text": "\"I instinctively notice when someone needs support and feel drawn to help them.\"",
       "category": 2
     },
     {
-      "id": "8ee39fc0-68d1-4b2b-88b1-2184fbfa286b",
+      "id": "5c5ae37d-03ab-47c2-930f-1600a73e58c3",
       "text": "\"I feel a strong emotional need to be needed and valued by the people I care about.\"",
       "category": 2
     },
     {
-      "id": "092719a9-0971-423d-bcf9-5f16c94a4aec",
+      "id": "96acd3f3-3dee-4b1c-893f-4b1390b934af",
       "text": "\"I feel driven to succeed and fear being seen as a failure or incapable.\"",
       "category": 3
     },
     {
-      "id": "bddf1b0e-e17c-4efa-98e0-7923c16580b4",
+      "id": "f9640aff-e2da-404c-aa5d-7708e70495d9",
       "text": "\"I often adjust my personality or behavior to match the expectations of others.\"",
       "category": 3
     },
     {
-      "id": "4268b262-eef3-4f3c-b643-318db5335e18",
+      "id": "3c3db939-455b-41e2-a515-ebec8cf981cd",
       "text": "\"I naturally detect what others value and scan for opportunities to shine and advance.\"",
       "category": 3
     },
     {
-      "id": "ebf24cf4-5ce3-4207-add8-ce3b6e29d218",
+      "id": "fa3ec0d0-3f6c-4c22-a6ae-c3edfc2914bf",
       "text": "\"I feel restless and unsatisfied if I’m not actively working toward something significant, or an ambitious goal.\"",
       "category": 3
     },
     {
-      "id": "dde9ae8a-cefa-4016-a139-1ae9020df7a8",
+      "id": "a22cfe59-3bd4-4a45-b1fb-8ae3e6a9388b",
       "text": "\"I measure my worth by how much I’m able to achieve.\"",
       "category": 3
     },
     {
-      "id": "49947e44-690f-42b1-bc51-1a59bd67621f",
+      "id": "0e8c1999-ee07-4a77-8cf2-55e30f854a9a",
       "text": "\"I feel a strong sense of purpose when I’m being recognized for what I accomplish.\"",
       "category": 3
     },
     {
-      "id": "dc71d193-5447-4285-bdc5-50a5bfa4576f",
+      "id": "0da29e0d-99a9-4be6-9e2f-698cc8e71f09",
       "text": "\"I feel most alive when I’m expressing something that reflects my unique identity and emotional depth.\"",
       "category": 4
     },
     {
-      "id": "0478f06c-21da-4dd1-9310-233d73853da0",
+      "id": "94e43727-6385-47ef-ad80-79852a03bdc7",
       "text": "\"I sometimes feel like I don’t fully belong, as if there’s something missing or different about me.\"",
       "category": 4
     },
     {
-      "id": "f2a90e5b-33ea-4c47-8c89-d1a1591262f3",
+      "id": "7a521af7-e430-4f30-bc44-30afdc9effb5",
       "text": "\"I find beauty and meaning in experiences that others might overlook as ordinary.\"",
       "category": 4
     },
     {
-      "id": "c811379b-d73a-4740-9602-c59706f7c842",
+      "id": "ab732d8d-fab7-4708-a5b4-a12a48158b99",
       "text": "\"I often feel a longing for something that is difficult to define.\"",
       "category": 4
     },
     {
-      "id": "f39af33d-5cf9-44d6-9925-5cd101a50d4b",
+      "id": "71ce4b1e-6f1c-4e6f-8f8b-eb9219637741",
       "text": "\"I dislike the idea of blending in with the crowd and look for ways to express my individuality.\"",
       "category": 4
     },
     {
-      "id": "f95de6f3-7577-4f6c-b5f1-0d02bf260572",
+      "id": "eda0432c-8082-4f66-8620-74391cf62bfd",
       "text": "\"I’m drawn to exploring and understanding the deeper emotional truths behind my experiences.\"",
       "category": 4
     },
     {
-      "id": "30f35b74-eb3f-454b-bfb1-11fc8bb55092",
+      "id": "60eb0ba8-cd21-4e79-88cc-732b92798553",
       "text": "\"I feel the need to gather as much knowledge as I can before making decisions.\"",
       "category": 5
     },
     {
-      "id": "4116e59d-ea11-4b47-b41d-e2861cbe277b",
-      "text": "\"I feel most at ease when I have the space to handle things on my own.\"\r\n",
+      "id": "e8929019-00b3-4777-a904-9855242b4bd2",
+      "text": "\"I feel most at ease when I have the space to handle things on my own.\"",
       "category": 5
     },
     {
-      "id": "9f23da49-5110-40ed-a6e7-994458300302",
+      "id": "399d4de6-8386-4b15-84d1-f290295c0847",
       "text": "\"I feel more comfortable observing from the sidelines than being the center of attention.\"",
       "category": 5
     },
     {
-      "id": "90c02c4b-0d06-42c6-a462-20874b39feef",
+      "id": "8b94e896-ac30-46a9-ba16-5e5046574d0b",
       "text": "\"I often feel drained when others make too many emotional or social demands on me.\"",
       "category": 5
     },
     {
-      "id": "74fd5daa-483d-4c69-b3e2-cc6bb26bf428",
+      "id": "c36285c9-9d2d-4849-ae4d-4fb91b67425a",
       "text": "\"I sometimes worry about running out of energy or resources, so I carefully manage what I give to others.\"",
       "category": 5
     },
     {
-      "id": "94740a93-bb1b-4b4c-83f3-45dcc92dd1a1",
+      "id": "6740caac-2a1d-4d7e-9425-e0fb26c591be",
       "text": "\"I prefer relationships with clear boundaries so I can maintain my personal space and autonomy.\"",
       "category": 5
     },
     {
-      "id": "65015e7f-3dfe-47c1-8908-eafc7f2fa9f0",
+      "id": "3db1dad3-d893-4854-a330-d908989955af",
       "text": "\"I am sensitive to any signs that someone may be unreliable, disloyal or inconsistent.\"",
       "category": 6
     },
     {
-      "id": "eb27115b-0b58-4726-bff7-284440966026",
+      "id": "49be59dc-defb-4730-9602-cb463ac6acb6",
       "text": "\"I often seek reassurance from others to help me feel more confident in my decisions.\"",
       "category": 6
     },
     {
-      "id": "30f842d5-dd8d-4aaf-893a-1ca0441a65aa",
+      "id": "ed8d26e7-758f-454a-9a93-a2b15d7674c3",
       "text": "\"I often look for signs that people or systems are trustworthy before I fully commit.\"",
       "category": 6
     },
     {
-      "id": "6d977146-0a5c-4660-849b-cc2578e48c69",
+      "id": "9194936b-8269-4a0d-ae44-cfb6f9236512",
       "text": "\"I frequently worry about potential risks and plan for worst-case scenarios.\"",
       "category": 6
     },
     {
-      "id": "66b7d117-c7b5-45e4-8137-922419eb2abd",
+      "id": "8934bcff-27e9-4fcb-9898-3e60a9e152ba",
       "text": "\"I feel more confident when I have clear guidelines or authority to rely on.\"",
       "category": 6
     },
     {
-      "id": "0579936b-58d7-4aa4-9b2c-bc2e3e54f9f8",
+      "id": "4420387b-a614-4fb1-8f08-f6458414e1a2",
       "text": "\"I feel most at ease when I can rely on others to be consistent and dependable.\"",
       "category": 6
     },
     {
-      "id": "4c08305b-9f3e-437f-baaf-19706a2d9d42",
+      "id": "1a0e8fbb-e85a-4c46-a4cd-2362251c1e10",
       "text": "\"I crave new experiences and feel stifled by routine.\"",
       "category": 7
     },
     {
-      "id": "8b5a9c40-761f-4ba5-a095-925e155c30fc",
+      "id": "292c4929-5048-4c6e-a843-8212362fd2da",
       "text": "\"I feel energized by imagining exciting new ideas and experiences that I can pursue in the future.\"",
       "category": 7
     },
     {
-      "id": "112765c4-38c6-414e-aa76-31ce2c589a63",
+      "id": "421cec3e-7c60-493c-8dbd-7b0f5971eb3d",
       "text": "\"I always look for opportunities to make life more fun, enjoyable, and full of variety.\"",
       "category": 7
     },
     {
-      "id": "f1447e34-1a2a-474c-900e-82387bcde49d",
+      "id": "61014144-dd34-4606-95fe-7c8c4415b9b7",
       "text": "\"I feel trapped and restless when I’m stuck in a routine or restricted environment.\"",
       "category": 7
     },
     {
-      "id": "4e38eb63-84e8-4871-a26f-9242287d245a",
+      "id": "642a4cf8-f840-4d51-a132-a432d1e30c59",
       "text": "\"I value flexibility and prefer to do things my way.\"",
       "category": 7
     },
     {
-      "id": "14352986-cdee-4c85-9b86-1a0129fa184c",
+      "id": "a03cd7ab-3cb8-49f1-8f28-e8bd7aaee3fa",
       "text": "\"I avoid dwelling on negative emotions and prefer to stay optimistic.\"",
       "category": 7
     },
     {
-      "id": "17f331f6-8c9d-4758-a668-63a1de0b5a14",
+      "id": "c10736a4-8196-4c79-bc52-6dfff93f4756",
       "text": "\"I pride myself on being strong and independent, and I rarely let others see when I’m feeling vulnerable.\"",
       "category": 8
     },
     {
-      "id": "b0c4b569-5df3-441e-8b05-3cebf0c8808e",
+      "id": "7bdb03db-971f-4884-a2af-2b3b35e8054f",
       "text": "\"I naturally detect weakness and strength in situations and people\"",
       "category": 8
     },
     {
-      "id": "80e9cf4e-3223-466f-94f7-6fd31a1abdcc",
+      "id": "f6a3c75d-7a94-4d4c-8c2e-5fad7662c846",
       "text": "\"I often take charge in situations where I feel things are out of control, to protect myself and others.\"",
       "category": 8
     },
     {
-      "id": "e7b56790-67d1-4d84-a2ad-8a1626dc62f6",
+      "id": "a850c736-cf22-442b-924b-e998ad29c668",
       "text": "\"I dislike relying on others and prefer to be in control of my own decisions and resources.\"",
       "category": 8
     },
     {
-      "id": "0638ffea-fe67-45c6-8a1c-372111988316",
+      "id": "877483b3-e5b7-4eab-90bb-bea8395c2d6f",
       "text": "\"I am the first to confront people or situations I believe are unfair or unjust.\"",
       "category": 8
     },
     {
-      "id": "e763f6c3-7fa5-4797-8d5a-a3678f44ae5c",
+      "id": "c12b1bf2-6e5c-4d64-8bed-702b270bba3f",
       "text": "\"I respect people who are strong and direct, even if we don’t always agree.\"",
       "category": 8
     },
     {
-      "id": "d9f4b211-0738-4664-b16f-0c4bc46b27af",
+      "id": "3646a1b0-cc19-489d-a25e-924fdf16c476",
       "text": "\"I tend to agree with others to avoid arguments, even if I feel differently.\"",
       "category": 9
     },
     {
-      "id": "1705ff65-5970-4598-8110-d0f75ed23db9",
+      "id": "fef682d0-74a1-40e0-aee6-dba008c06ef5",
       "text": "\"I feel most comfortable when everything around me is calm and harmonious.\"",
       "category": 9
     },
     {
-      "id": "d4ee3d5c-c928-4736-b6ca-eee47a7b2ce4",
+      "id": "64ffb6de-20b2-497b-8af9-18f3553baae2",
       "text": "\"I often lose track of my own needs because I prioritize keeping peace and avoiding conflict.\"",
       "category": 9
     },
     {
-      "id": "1f0179f1-262c-4385-afef-4ab8f8055d29",
+      "id": "a74f8c11-f174-4c97-89c3-79050abb7cd5",
       "text": "\"I sometimes go along with others’ preferences to avoid making waves or drawing attention to myself.\"",
       "category": 9
     },
     {
-      "id": "c9d76bbc-0a15-43b0-9e38-4144960c3072",
+      "id": "b7b4f0bf-70b5-4870-a137-9f261536b2bc",
       "text": "\"I value maintaining stability and avoiding unnecessary disruptions\"",
       "category": 9
     },
     {
-      "id": "fc630fc9-ed9f-420b-a6ff-01ac5de1b925",
-      "text": "\"I feel most at ease when everyone around me is getting along and there’s no tension.\"\r\n",
+      "id": "c657ea95-4263-4eb9-b224-4e28f88cce91",
+      "text": "\"I feel most at ease when everyone around me is getting along and there’s no tension.\"",
       "category": 9
     }
   ],

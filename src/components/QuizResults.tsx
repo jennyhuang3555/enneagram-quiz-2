@@ -13,10 +13,14 @@ import {
   YAxis,
 } from "recharts";
 import { typeDescriptions } from '@/data/typeDescriptions';
+import { QuestionResponse } from '@/types/quiz';
+import { useEffect, useState } from "react";
+import { supabase } from "@/lib/supabase";
 
 interface QuizResultsProps {
   quiz: Quiz;
   scores: { [key: string]: number };
+  responses: QuestionResponse[];
   onClose: () => void;
 }
 
@@ -57,21 +61,28 @@ interface TypeDescription {
   growthDescription: string;
 }
 
-const QuizResults = ({ quiz, scores, onClose }: QuizResultsProps) => {
-  // Add console logs to debug
-  console.log('Scores:', scores);
-  
+const QuizResults = ({ quiz, scores, responses, onClose }: QuizResultsProps) => {
   const dominantType = Object.entries(scores)
     .reduce((a, [key, value]) => {
       return scores[a] > value ? a : key;
     }, Object.keys(scores)[0]);
-  
-  console.log('Dominant Type:', dominantType);
-  
-  const dominantTypeDesc = typeDescriptions[dominantType as keyof typeof typeDescriptions];
-  console.log('Type Description:', dominantTypeDesc);
 
-  // Add a guard clause
+  const dominantTypeDesc = typeDescriptions[dominantType as keyof typeof typeDescriptions];
+
+  const chartData = Object.entries(TYPE_COLORS)
+    .map(([type, color]) => ({
+      name: `Type ${type.replace('type', '')}`,
+      value: scores[type] || 0,
+      normalizedValue: scores[type] || 0,
+      color: color,
+      isDominant: type === dominantType
+    }))
+    .sort((a, b) => {
+      if (a.isDominant) return -1;
+      if (b.isDominant) return 1;
+      return b.value - a.value;
+    });
+
   if (!dominantTypeDesc) {
     console.error('No type description found for:', dominantType);
     return (
@@ -82,23 +93,6 @@ const QuizResults = ({ quiz, scores, onClose }: QuizResultsProps) => {
       </div>
     );
   }
-
-  // Ensure all types are included in chart data
-  const chartData = Object.entries(TYPE_COLORS)
-    .map(([type, color]) => ({
-      name: `Type ${type.replace('type', '')}`,
-      value: scores[type] || 0,
-      normalizedValue: scores[type] || 0,
-      color: color,
-      isDominant: type === dominantType
-    }))
-    .sort((a, b) => {
-      // Always put dominant type first
-      if (a.isDominant) return -1;
-      if (b.isDominant) return 1;
-      // Then sort others by value
-      return b.value - a.value;
-    });
 
   // Calculate normalized values
   const maxScore = Math.max(...chartData.map(item => item.value));

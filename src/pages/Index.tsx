@@ -7,6 +7,7 @@ import Questions from "@/components/Questions";
 import QuizResults from "@/components/QuizResults";
 import UserInfoForm from "@/components/UserInfoForm";
 import { supabase } from "@/lib/supabase";
+import { QuestionResponse } from "@/types/quiz";
 
 type Step = "landing" | "introduction" | "questions" | "user-info" | "results";
 
@@ -46,77 +47,97 @@ interface UserResult {
 }
 
 const Index = () => {
-  const [currentStep, setCurrentStep] = useState<Step>("landing");
-  const [quizScores, setQuizScores] = useState<{ [key: string]: number }>({});
-  const [userInfo, setUserInfo] = useState<{ name: string; email: string } | null>(null);
+  const [step, setStep] = useState<Step>("landing");
+  const [scores, setScores] = useState<{ [key: string]: number } | null>(null);
+  const [responses, setResponses] = useState<QuestionResponse[]>([]);
+  const [dominantType, setDominantType] = useState<string>('');
+  const [secondType, setSecondType] = useState<string>('');
+  const [thirdType, setThirdType] = useState<string>('');
 
-  const handleQuizComplete = (scores: { [key: string]: number }) => {
-    setQuizScores(scores);
-    setCurrentStep("user-info");
+  const handleQuizComplete = (
+    newScores: { [key: string]: number }, 
+    quizResponses: QuestionResponse[]
+  ) => {
+    setScores(newScores);
+    setResponses(quizResponses);
+    
+    // Calculate types (keep the full 'type' prefix)
+    const sortedTypes = Object.entries(newScores)
+      .sort(([, a], [, b]) => b - a)
+      .map(([type]) => type);
+    
+    setDominantType(sortedTypes[0]);  // This will be like 'type1'
+    setSecondType(sortedTypes[1]);    // This will be like 'type2'
+    setThirdType(sortedTypes[2]);     // This will be like 'type3'
+    
+    setStep("user-info");
   };
 
-  const handleUserInfoSubmit = async (name: string, email: string) => {
-    const result = {
-      name,
-      email,
-      scores: quizScores,
+  const handleUserInfoSubmit = async (userInfo: { name: string; email: string }) => {
+    console.log('Types before submission:', {
+      dominant: dominantType,
+      second: secondType,
+      third: thirdType
+    });
+
+    const payload = {
+      name: userInfo.name,
+      email: userInfo.email,
+      scores: scores || {},
+      responses: responses,
+      dominant_type: dominantType?.replace('type', '') || '',  // Will now correctly be just the number
+      second_type: secondType?.replace('type', '') || '',      // Will now correctly be just the number
+      third_type: thirdType?.replace('type', '') || '',        // Will now correctly be just the number
+      created_at: new Date().toISOString()
     };
 
-    console.log('Submitting result:', result);
+    console.log('Submitting payload:', JSON.stringify(payload, null, 2));
 
     try {
-      const { error, data } = await supabase
+      const { data, error } = await supabase
         .from('quiz_results')
-        .insert([result]);
-
-      console.log('Supabase response:', { error, data });
+        .insert([payload])
+        .select();
 
       if (error) {
+        console.error('Supabase Error:', {
+          message: error.message,
+          details: error.details,
+          hint: error.hint
+        });
         throw error;
       }
 
-      setUserInfo({ name, email });
-      setCurrentStep("results");
+      console.log('Successfully saved results:', data);
+      setStep('results');
     } catch (error) {
       console.error('Error submitting results:', error);
-      alert('Failed to save results. Please try again.');
     }
   };
 
   return (
-    <div>
-    
-      
-      {currentStep === "landing" && (
-        <LandingPage onStart={() => setCurrentStep("introduction")} />
+    <div className="container mx-auto px-4 py-8">
+      {step === "landing" && (
+        <LandingPage onStart={() => setStep("introduction")} />
       )}
-      
-      {currentStep === "introduction" && (
-        <TestIntroduction
-          onStart={() => setCurrentStep("questions")}
-          onBack={() => setCurrentStep("landing")}
-        />
+      {step === "introduction" && (
+        <TestIntroduction onStart={() => setStep("questions")} />
       )}
-      
-      {currentStep === "questions" && (
+      {step === "questions" && (
         <Questions
           onComplete={handleQuizComplete}
-          onBack={() => setCurrentStep("introduction")}
+          onBack={() => setStep("introduction")}
         />
       )}
-
-      {currentStep === "user-info" && (
-        <UserInfoForm
-          scores={quizScores}
-          onSubmit={handleUserInfoSubmit}
-        />
+      {step === "user-info" && (
+        <UserInfoForm onSubmit={handleUserInfoSubmit} />
       )}
-
-      {currentStep === "results" && (
+      {step === "results" && scores && (
         <QuizResults
           quiz={sampleQuiz}
-          scores={quizScores}
-          onClose={() => setCurrentStep("landing")}
+          scores={scores}
+          responses={responses}
+          onClose={() => setStep("landing")}
         />
       )}
     </div>

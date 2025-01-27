@@ -1,9 +1,10 @@
 import { useState } from "react";
 import QuizQuestion from "./QuizQuestion";
 import quizData from '@/data/quiz-questions.json';
+import { QuestionResponse } from "@/types/quiz";
 
 interface QuestionsProps {
-  onComplete: (scores: { [key: string]: number }) => void;
+  onComplete: (scores: { [key: string]: number }, responses: QuestionResponse[]) => void;
   onBack: () => void;
 }
 
@@ -30,11 +31,22 @@ function shuffleArray<T>(array: T[]): T[] {
 }
 
 const Questions = ({ onComplete, onBack }: QuestionsProps) => {
-  // Randomize questions on initial load using useState callback
   const [questions] = useState(() => shuffleArray(quizData.questions));
-  
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [scores, setScores] = useState<{ [key: string]: number }>(INITIAL_SCORES);
+  const [responses, setResponses] = useState<QuestionResponse[]>([]);
+
+  // Helper function to convert score to answer text
+  const getAnswerText = (score: number): string => {
+    switch (score) {
+      case 1: return "Strongly Disagree";
+      case 2: return "Disagree";
+      case 3: return "Neutral";
+      case 4: return "Agree";
+      case 5: return "Strongly Agree";
+      default: return "Not Answered";
+    }
+  };
 
   const handleNext = (score: number) => {
     const currentType = `type${questions[currentQuestion].category}`;
@@ -42,10 +54,26 @@ const Questions = ({ onComplete, onBack }: QuestionsProps) => {
       ...scores,
       [currentType]: (scores[currentType] || 0) + score
     };
+    
+    // Store individual question response
+    const response: QuestionResponse = {
+      questionId: questions[currentQuestion].id,
+      questionText: questions[currentQuestion].text,
+      category: questions[currentQuestion].category,
+      score: score,
+      answerText: getAnswerText(score)
+    };
+    
+    const newResponses = [...responses, response];
+    setResponses(newResponses);
     setScores(newScores);
 
     if (currentQuestion === questions.length - 1) {
-      onComplete(newScores);
+      console.log('Completing quiz with:', {
+        scores: newScores,
+        responses: newResponses
+      });
+      onComplete(newScores, newResponses);
     } else {
       setCurrentQuestion(currentQuestion + 1);
     }

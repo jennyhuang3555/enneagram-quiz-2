@@ -24,3 +24,11 @@ export interface Quiz {
   questions: Question[];
   resultRanges: ResultRange[];
 }
+
+export interface QuestionResponse {
+  questionId: string;
+  questionText: string;
+  category: number;
+  score: number;
+  answerText: string;
+}
