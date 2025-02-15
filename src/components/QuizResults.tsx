@@ -62,13 +62,30 @@ interface TypeDescription {
 }
 
 const QuizResults = ({ quiz, scores, responses, onClose }: QuizResultsProps) => {
-  const dominantType = Object.entries(scores)
-    .reduce((a, [key, value]) => {
-      return scores[a] > value ? a : key;
-    }, Object.keys(scores)[0]);
+  // At the top of the component, calculate the actual order by scores
+  const typesByScore = Object.entries(scores)
+    .sort(([, scoreA], [, scoreB]) => scoreB - scoreA)
+    .map(([type]) => type);
 
+  const dominantType = typesByScore[0];
+  const secondType = typesByScore[1];
+  const thirdType = typesByScore[2];
+
+  // Log for verification
+  console.log('Types by score:', {
+    scores,
+    typesByScore,
+    dominant: dominantType,
+    second: secondType,
+    third: thirdType
+  });
+
+  // Use these for the descriptions
   const dominantTypeDesc = typeDescriptions[dominantType as keyof typeof typeDescriptions];
+  const secondTypeDesc = typeDescriptions[secondType as keyof typeof typeDescriptions];
+  const thirdTypeDesc = typeDescriptions[thirdType as keyof typeof typeDescriptions];
 
+  // Chart data can still be sorted by type number for display
   const chartData = Object.entries(TYPE_COLORS)
     .map(([type, color]) => ({
       name: `Type ${type.replace('type', '')}`,
@@ -78,9 +95,9 @@ const QuizResults = ({ quiz, scores, responses, onClose }: QuizResultsProps) => 
       isDominant: type === dominantType
     }))
     .sort((a, b) => {
-      if (a.isDominant) return -1;
-      if (b.isDominant) return 1;
-      return b.value - a.value;
+      const typeA = parseInt(a.name.replace('Type ', ''));
+      const typeB = parseInt(b.name.replace('Type ', ''));
+      return typeA - typeB;
     });
 
   if (!dominantTypeDesc) {
@@ -132,41 +149,22 @@ const QuizResults = ({ quiz, scores, responses, onClose }: QuizResultsProps) => 
           <BarChart
             data={chartData}
             layout="vertical"
-            margin={{ top: 20, right: 30, left: 100, bottom: 5 }}
+            margin={{ top: 0, right: 0, bottom: 0, left: 60 }}
           >
-            <XAxis 
-              type="number" 
-              domain={[0, 100]}
-              tickFormatter={(value) => `${value}%`}
-              fontSize={12}
-              stroke="#64748b"
-            />
-            <YAxis 
-              type="category" 
+            <XAxis type="number" domain={[0, 100]} />
+            <YAxis
+              type="category"
               dataKey="name"
-              fontSize={14}
-              stroke="#64748b"
-              width={80}
+              width={60}
+              tick={{ fill: '#666', fontSize: 14 }}
             />
-            <Tooltip 
-              formatter={(value: number) => `${Math.round(value)}%`}
-              contentStyle={{
-                backgroundColor: 'rgba(255, 255, 255, 0.95)',
-                borderRadius: '8px',
-                border: 'none',
-                boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)',
-              }}
-            />
-            <Bar 
-              dataKey="normalizedValue" 
+            <Bar
+              dataKey="normalizedValue"
+              fill="#8884d8"
               radius={[0, 4, 4, 0]}
             >
               {chartData.map((entry, index) => (
-                <Cell 
-                  key={`cell-${index}`} 
-                  fill={entry.color}
-                  fillOpacity={0.85}
-                />
+                <Cell key={`cell-${index}`} fill={entry.color} />
               ))}
             </Bar>
           </BarChart>
@@ -261,14 +259,13 @@ const QuizResults = ({ quiz, scores, responses, onClose }: QuizResultsProps) => 
       {/* Second and Third Highest Types */}
       <div className="mt-12 space-y-8">
         <h3 className="text-3xl font-semibold text-gray-700">
-          You also resonate with Type {chartData[1].name.replace('Type ', '')} ({TYPE_NAMES[`type${chartData[1].name.replace('Type ', '')}` as keyof typeof TYPE_NAMES]}) 
-          and Type {chartData[2].name.replace('Type ', '')} ({TYPE_NAMES[`type${chartData[2].name.replace('Type ', '')}` as keyof typeof TYPE_NAMES]})
+          You also resonate with Type {secondTypeDesc.title} and Type {thirdTypeDesc.title}
         </h3>
 
         {/* Second Highest Type */}
         <section className="space-y-6 bg-gray-50 p-6 rounded-lg">
           <h4 className="text-2xl font-bold bg-gradient-to-r from-purple-500 to-pink-500 text-transparent bg-clip-text">
-            Type {chartData[1].name.replace('Type ', '')} - {TYPE_NAMES[`type${chartData[1].name.replace('Type ', '')}` as keyof typeof TYPE_NAMES]}
+            {secondTypeDesc.title}
           </h4>
           <div className="space-y-6">
             <section>
@@ -276,7 +273,7 @@ const QuizResults = ({ quiz, scores, responses, onClose }: QuizResultsProps) => 
                 In a Nutshell
               </h5>
               <p className="text-lg text-gray-600">
-                {typeDescriptions[`type${chartData[1].name.replace('Type ', '')}` as keyof typeof typeDescriptions].inNutshell}
+                {secondTypeDesc.inNutshell}
               </p>
             </section>
             
@@ -285,7 +282,7 @@ const QuizResults = ({ quiz, scores, responses, onClose }: QuizResultsProps) => 
                 Motivation and Core Fears
               </h5>
               <p className="text-lg text-gray-600">
-                {typeDescriptions[`type${chartData[1].name.replace('Type ', '')}` as keyof typeof typeDescriptions].motivationAndFears}
+                {secondTypeDesc.motivationAndFears}
               </p>
             </section>
             
@@ -294,7 +291,7 @@ const QuizResults = ({ quiz, scores, responses, onClose }: QuizResultsProps) => 
                 Worldview and Focus of Attention
               </h5>
               <p className="text-lg text-gray-600">
-                {typeDescriptions[`type${chartData[1].name.replace('Type ', '')}` as keyof typeof typeDescriptions].worldview}
+                {secondTypeDesc.worldview}
               </p>
             </section>
           </div>
@@ -303,7 +300,7 @@ const QuizResults = ({ quiz, scores, responses, onClose }: QuizResultsProps) => 
         {/* Third Highest Type */}
         <section className="space-y-6 bg-gray-50 p-6 rounded-lg">
           <h4 className="text-2xl font-bold bg-gradient-to-r from-purple-500 to-pink-500 text-transparent bg-clip-text">
-            Type {chartData[2].name.replace('Type ', '')} - {TYPE_NAMES[`type${chartData[2].name.replace('Type ', '')}` as keyof typeof TYPE_NAMES]}
+            {thirdTypeDesc.title}
           </h4>
           <div className="space-y-6">
             <section>
@@ -311,7 +308,7 @@ const QuizResults = ({ quiz, scores, responses, onClose }: QuizResultsProps) => 
                 In a Nutshell
               </h5>
               <p className="text-lg text-gray-600">
-                {typeDescriptions[`type${chartData[2].name.replace('Type ', '')}` as keyof typeof typeDescriptions].inNutshell}
+                {thirdTypeDesc.inNutshell}
               </p>
             </section>
             
@@ -320,7 +317,7 @@ const QuizResults = ({ quiz, scores, responses, onClose }: QuizResultsProps) => 
                 Motivation and Core Fears
               </h5>
               <p className="text-lg text-gray-600">
-                {typeDescriptions[`type${chartData[2].name.replace('Type ', '')}` as keyof typeof typeDescriptions].motivationAndFears}
+                {thirdTypeDesc.motivationAndFears}
               </p>
             </section>
             
@@ -329,7 +326,7 @@ const QuizResults = ({ quiz, scores, responses, onClose }: QuizResultsProps) => 
                 Worldview and Focus of Attention
               </h5>
               <p className="text-lg text-gray-600">
-                {typeDescriptions[`type${chartData[2].name.replace('Type ', '')}` as keyof typeof typeDescriptions].worldview}
+                {thirdTypeDesc.worldview}
               </p>
             </section>
           </div>

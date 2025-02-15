@@ -61,14 +61,18 @@ const Index = () => {
     setScores(newScores);
     setResponses(quizResponses);
     
-    // Calculate types (keep the full 'type' prefix)
+    // Sort by score values (highest to lowest)
     const sortedTypes = Object.entries(newScores)
-      .sort(([, a], [, b]) => b - a)
+      .sort(([, scoreA], [, scoreB]) => scoreB - scoreA)
       .map(([type]) => type);
+
+    console.log('Sorted scores:', Object.entries(newScores)
+      .sort(([, scoreA], [, scoreB]) => scoreB - scoreA)
+      .map(([type, score]) => `${type}: ${score}`));
     
-    setDominantType(sortedTypes[0]);  // This will be like 'type1'
-    setSecondType(sortedTypes[1]);    // This will be like 'type2'
-    setThirdType(sortedTypes[2]);     // This will be like 'type3'
+    setDominantType(sortedTypes[0]);
+    setSecondType(sortedTypes[1]);
+    setThirdType(sortedTypes[2]);
     
     setStep("user-info");
   };
