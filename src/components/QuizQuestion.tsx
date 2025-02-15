@@ -34,6 +34,9 @@ const QuizQuestion = ({
     <div className="min-h-screen flex flex-col items-center justify-center p-4 animate-fade-in">
       <Card className="max-w-2xl w-full p-8 glass-card space-y-6">
         <div className="space-y-4">
+          <p className="text-center text-gray-600 text-base mb-2">
+            Answer with your whole life in view, for how you are most of the time.
+          </p>
           <div className="flex justify-between items-center text-sm text-gray-600">
             <span>Question {currentQuestion + 1} of {totalQuestions}</span>
             <span>{Math.round(progress)}% Complete</span>

@@ -17,10 +17,10 @@ const LandingPage = ({ onStart }: { onStart: () => void }) => {
           </p>
           
           <ul className="text-left space-y-2 text-gray-600">
-            <li>✨ Gain deep insights into your personality</li>
+            <li>✨ Gain insights into your deepest patterns </li>
             <li>🎯 Understand your core motivations</li>
             <li>🌱 Discover paths for personal growth</li>
-            <li>💫 Learn how to relate better with others</li>
+            <li>💫 Unpack your triggers and fears</li>
           </ul>
         </div>
 
