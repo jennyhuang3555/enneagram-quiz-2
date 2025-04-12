@@ -49,20 +49,43 @@ const TYPE_NAMES = {
 };
 
 const QuizResults = ({ quiz, scores, responses, onClose }: QuizResultsProps) => {
-  // Sort scores by value (highest to lowest)
+  // Format type keys to ensure they start with "type"
+  const formatTypeKey = (type: string) => {
+    return type.startsWith('type') ? type : `type${type}`;
+  };
+
+  // Sort and format type keys
   const sortedTypes = Object.entries(scores)
     .sort(([, scoreA], [, scoreB]) => scoreB - scoreA)
-    .map(([type]) => type);
+    .map(([type]) => formatTypeKey(type));
 
   // Get the top three types
-  const dominantType = sortedTypes[0];
-  const secondType = sortedTypes[1];
-  const thirdType = sortedTypes[2];
+  const dominantType = formatTypeKey(sortedTypes[0]);
+  const secondType = formatTypeKey(sortedTypes[1]);
+  const thirdType = formatTypeKey(sortedTypes[2]);
 
-  // Get descriptions for each type
+  // Get descriptions with error checking
   const dominantTypeDesc = typeDescriptions[dominantType];
   const secondTypeDesc = typeDescriptions[secondType];
   const thirdTypeDesc = typeDescriptions[thirdType];
+
+  // Error handling for missing descriptions
+  if (!dominantTypeDesc || !secondTypeDesc || !thirdTypeDesc) {
+    console.error('Missing type descriptions:', {
+      dominant: dominantType,
+      second: secondType,
+      third: thirdType
+    });
+    return (
+      <Card className="p-8 max-w-4xl mx-auto">
+        <h2 className="text-2xl font-bold text-red-600">Error Loading Results</h2>
+        <p className="mt-4">Unable to load type descriptions. Please try again.</p>
+        <Button onClick={onClose} className="mt-6">
+          Close
+        </Button>
+      </Card>
+    );
+  }
 
   // Debug logging
   console.log('Scores:', scores);
