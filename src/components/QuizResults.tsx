@@ -48,42 +48,26 @@ const TYPE_NAMES = {
   type9: "The Peacemaker",
 };
 
-interface TypeDescription {
-  title: string;
-  inNutshell: string;
-  motivationAndFears: string;
-  worldview: string;
-  blindSpots: string[];  // Array for bullet points
-  strengths: string[];   // Array for bullet points
-  triggers: string[];    // Array for bullet points
-  challengingPatterns: string[];
-  growthQuestions: string[];  // Array for bullet points
-  growthDescription: string;
-}
-
 const QuizResults = ({ quiz, scores, responses, onClose }: QuizResultsProps) => {
-  // At the top of the component, calculate the actual order by scores
-  const typesByScore = Object.entries(scores)
+  // Sort scores by value (highest to lowest)
+  const sortedTypes = Object.entries(scores)
     .sort(([, scoreA], [, scoreB]) => scoreB - scoreA)
     .map(([type]) => type);
 
-  const dominantType = typesByScore[0];
-  const secondType = typesByScore[1];
-  const thirdType = typesByScore[2];
+  // Get the top three types
+  const dominantType = sortedTypes[0];
+  const secondType = sortedTypes[1];
+  const thirdType = sortedTypes[2];
 
-  // Log for verification
-  console.log('Types by score:', {
-    scores,
-    typesByScore,
-    dominant: dominantType,
-    second: secondType,
-    third: thirdType
-  });
+  // Get descriptions for each type
+  const dominantTypeDesc = typeDescriptions[dominantType];
+  const secondTypeDesc = typeDescriptions[secondType];
+  const thirdTypeDesc = typeDescriptions[thirdType];
 
-  // Use these for the descriptions
-  const dominantTypeDesc = typeDescriptions[dominantType as keyof typeof typeDescriptions];
-  const secondTypeDesc = typeDescriptions[secondType as keyof typeof typeDescriptions];
-  const thirdTypeDesc = typeDescriptions[thirdType as keyof typeof typeDescriptions];
+  // Debug logging
+  console.log('Scores:', scores);
+  console.log('Sorted Types:', sortedTypes);
+  console.log('Top Three:', { dominantType, secondType, thirdType });
 
   // Chart data can still be sorted by type number for display
   const chartData = Object.entries(TYPE_COLORS)
@@ -99,17 +83,6 @@ const QuizResults = ({ quiz, scores, responses, onClose }: QuizResultsProps) => 
       const typeB = parseInt(b.name.replace('Type ', ''));
       return typeA - typeB;
     });
-
-  if (!dominantTypeDesc) {
-    console.error('No type description found for:', dominantType);
-    return (
-      <div className="p-6">
-        <h3>Error loading results</h3>
-        <p>Could not find type description for {dominantType}</p>
-        <Button onClick={onClose}>Close</Button>
-      </div>
-    );
-  }
 
   // Calculate normalized values
   const maxScore = Math.max(...chartData.map(item => item.value));
@@ -130,9 +103,10 @@ const QuizResults = ({ quiz, scores, responses, onClose }: QuizResultsProps) => 
   return (
     <Card className="p-8 max-w-4xl mx-auto space-y-8 animate-fade-in bg-white/95 backdrop-blur">
       <div className="text-center space-y-4">
-        <h2 className="text-4xl font-bold text-center mb-8 bg-gradient-to-r from-purple-500 to-pink-500 text-transparent bg-clip-text">
+        <h2 className="text-4xl font-bold text-center mb-4 bg-gradient-to-r from-purple-500 to-pink-500 text-transparent bg-clip-text">
           {dominantTypeDesc.title}
         </h2>
+        
         <p className="text-xl text-muted-foreground">
           Your dominant type is:{" "}
           <span 
@@ -181,85 +155,27 @@ const QuizResults = ({ quiz, scores, responses, onClose }: QuizResultsProps) => 
             <h4 className="text-2xl font-semibold mb-4 bg-gradient-to-r from-purple-500 to-pink-500 text-transparent bg-clip-text">
               In a Nutshell
             </h4>
-            <p className="text-xl text-gray-600">{dominantTypeDesc.inNutshell}</p>
-          </section>
-
-          <section>
-            <h4 className="text-2xl font-semibold mb-4 bg-gradient-to-r from-purple-500 to-pink-500 text-transparent bg-clip-text">
-              Motivation and Core Fears
-            </h4>
-            <p className="text-xl text-gray-600">{dominantTypeDesc.motivationAndFears}</p>
-          </section>
-
-          <section>
-            <h4 className="text-2xl font-semibold mb-4 bg-gradient-to-r from-purple-500 to-pink-500 text-transparent bg-clip-text">
-              Worldview and Focus of Attention
-            </h4>
-            <p className="text-xl text-gray-600">{dominantTypeDesc.worldview}</p>
-          </section>
-
-          <section>
-            <h4 className="text-2xl font-semibold mb-4 bg-gradient-to-r from-purple-500 to-pink-500 text-transparent bg-clip-text">
-              Blind Spots
-            </h4>
-            <ul className="list-disc pl-5 space-y-3">
-              {dominantTypeDesc.blindSpots.map((item, index) => (
-                <li key={index} className="text-xl text-gray-600">{item}</li>
-              ))}
-            </ul>
-          </section>
-
-          <section>
-            <h4 className="text-2xl font-semibold mb-4 bg-gradient-to-r from-purple-500 to-pink-500 text-transparent bg-clip-text">
-              Strengths and Gifts
-            </h4>
-            <ul className="list-disc pl-5 space-y-3">
-              {dominantTypeDesc.strengths.map((item, index) => (
-                <li key={index} className="text-xl text-gray-600">{item}</li>
-              ))}
-            </ul>
-          </section>
-
-          <section>
-            <h4 className="text-2xl font-semibold mb-4 bg-gradient-to-r from-purple-500 to-pink-500 text-transparent bg-clip-text">
-              Triggers
-            </h4>
-            <ul className="list-disc pl-5 space-y-3">
-              {dominantTypeDesc.triggers.map((item, index) => (
-                <li key={index} className="text-xl text-gray-600">{item}</li>
-              ))}
-            </ul>
-          </section>
-
-          <section>
-            <h4 className="text-2xl font-semibold mb-4 bg-gradient-to-r from-purple-500 to-pink-500 text-transparent bg-clip-text">
-              Challenging Patterns
-            </h4>
-            <ul className="list-disc pl-5 space-y-3">
-              {dominantTypeDesc.challengingPatterns.map((item, index) => (
-                <li key={index} className="text-xl text-gray-600">{item}</li>
-              ))}
-            </ul>
-          </section>
-
-          <section>
-            <h4 className="text-2xl font-semibold mb-4 bg-gradient-to-r from-purple-500 to-pink-500 text-transparent bg-clip-text">
-              Growth Questions
-            </h4>
-            <p className="text-xl text-gray-600 mb-4">{dominantTypeDesc.growthDescription}</p>
-            <ul className="list-disc pl-5 space-y-3">
-              {dominantTypeDesc.growthQuestions.slice(2).map((item, index) => (
-                <li key={index} className="text-xl text-gray-600">{item}</li>
-              ))}
-            </ul>
+            <p className="text-gray-700 mb-6">
+              {dominantTypeDesc.inNutshell}
+            </p>
+            <div className="text-center mb-8">
+              <a
+                href={`https://www.integrative9.com/enneagram/introduction/type-${dominantType.replace('type', '')}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block px-4 py-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-lg hover:opacity-90 transition-opacity"
+              >
+                Learn more about Type {dominantType.replace('type', '')} here
+              </a>
+            </div>
           </section>
         </div>
       </div>
 
       {/* Second and Third Highest Types */}
       <div className="mt-12 space-y-8">
-        <h3 className="text-3xl font-semibold text-gray-700">
-          You also resonate with Type {secondTypeDesc.title} and Type {thirdTypeDesc.title}
+        <h3 className="text-2xl font-semibold mt-8 mb-4">
+          You also resonate with Type {secondType.replace('type', '')}: {TYPE_NAMES[secondType]} and Type {thirdType.replace('type', '')}: {TYPE_NAMES[thirdType]}
         </h3>
 
         {/* Second Highest Type */}
@@ -272,27 +188,19 @@ const QuizResults = ({ quiz, scores, responses, onClose }: QuizResultsProps) => 
               <h5 className="text-xl font-semibold mb-3 bg-gradient-to-r from-purple-500 to-pink-500 text-transparent bg-clip-text">
                 In a Nutshell
               </h5>
-              <p className="text-lg text-gray-600">
+              <p className="text-gray-700 mb-6">
                 {secondTypeDesc.inNutshell}
               </p>
-            </section>
-            
-            <section>
-              <h5 className="text-xl font-semibold mb-3 bg-gradient-to-r from-purple-500 to-pink-500 text-transparent bg-clip-text">
-                Motivation and Core Fears
-              </h5>
-              <p className="text-lg text-gray-600">
-                {secondTypeDesc.motivationAndFears}
-              </p>
-            </section>
-            
-            <section>
-              <h5 className="text-xl font-semibold mb-3 bg-gradient-to-r from-purple-500 to-pink-500 text-transparent bg-clip-text">
-                Worldview and Focus of Attention
-              </h5>
-              <p className="text-lg text-gray-600">
-                {secondTypeDesc.worldview}
-              </p>
+              <div className="text-center mb-8">
+                <a
+                  href={`https://www.integrative9.com/enneagram/introduction/type-${secondType.replace('type', '')}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-block px-4 py-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-lg hover:opacity-90 transition-opacity"
+                >
+                  Learn more about Type {secondType.replace('type', '')} here
+                </a>
+              </div>
             </section>
           </div>
         </section>
@@ -307,27 +215,19 @@ const QuizResults = ({ quiz, scores, responses, onClose }: QuizResultsProps) => 
               <h5 className="text-xl font-semibold mb-3 bg-gradient-to-r from-purple-500 to-pink-500 text-transparent bg-clip-text">
                 In a Nutshell
               </h5>
-              <p className="text-lg text-gray-600">
+              <p className="text-gray-700 mb-6">
                 {thirdTypeDesc.inNutshell}
               </p>
-            </section>
-            
-            <section>
-              <h5 className="text-xl font-semibold mb-3 bg-gradient-to-r from-purple-500 to-pink-500 text-transparent bg-clip-text">
-                Motivation and Core Fears
-              </h5>
-              <p className="text-lg text-gray-600">
-                {thirdTypeDesc.motivationAndFears}
-              </p>
-            </section>
-            
-            <section>
-              <h5 className="text-xl font-semibold mb-3 bg-gradient-to-r from-purple-500 to-pink-500 text-transparent bg-clip-text">
-                Worldview and Focus of Attention
-              </h5>
-              <p className="text-lg text-gray-600">
-                {thirdTypeDesc.worldview}
-              </p>
+              <div className="text-center mb-8">
+                <a
+                  href={`https://www.integrative9.com/enneagram/introduction/type-${thirdType.replace('type', '')}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-block px-4 py-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-lg hover:opacity-90 transition-opacity"
+                >
+                  Learn more about Type {thirdType.replace('type', '')} here
+                </a>
+              </div>
             </section>
           </div>
         </section>

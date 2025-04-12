@@ -53,6 +53,7 @@ const Index = () => {
   const [dominantType, setDominantType] = useState<string>('');
   const [secondType, setSecondType] = useState<string>('');
   const [thirdType, setThirdType] = useState<string>('');
+  const [error, setError] = useState<string>('');
 
   const handleQuizComplete = (
     newScores: { [key: string]: number }, 
@@ -63,12 +64,16 @@ const Index = () => {
     
     // Sort by score values (highest to lowest)
     const sortedTypes = Object.entries(newScores)
-      .sort(([, scoreA], [, scoreB]) => scoreB - scoreA)
+      .sort(([typeA, scoreA], [typeB, scoreB]) => {
+        // If scores are equal, prefer the type closer to 1
+        if (scoreB === scoreA) {
+          const numA = parseInt(typeA.replace('type', ''));
+          const numB = parseInt(typeB.replace('type', ''));
+          return numA - numB;
+        }
+        return scoreB - scoreA;
+      })
       .map(([type]) => type);
-
-    console.log('Sorted scores:', Object.entries(newScores)
-      .sort(([, scoreA], [, scoreB]) => scoreB - scoreA)
-      .map(([type, score]) => `${type}: ${score}`));
     
     setDominantType(sortedTypes[0]);
     setSecondType(sortedTypes[1]);
@@ -78,49 +83,50 @@ const Index = () => {
   };
 
   const handleUserInfoSubmit = async (userInfo: { name: string; email: string }) => {
-    console.log('Types before submission:', {
-      dominant: dominantType,
-      second: secondType,
-      third: thirdType
-    });
-
-    const payload = {
-      name: userInfo.name,
-      email: userInfo.email,
-      scores: scores || {},
-      responses: responses,
-      dominant_type: dominantType?.replace('type', '') || '',  // Will now correctly be just the number
-      second_type: secondType?.replace('type', '') || '',      // Will now correctly be just the number
-      third_type: thirdType?.replace('type', '') || '',        // Will now correctly be just the number
-      created_at: new Date().toISOString()
-    };
-
-    console.log('Submitting payload:', JSON.stringify(payload, null, 2));
-
     try {
-      const { data, error } = await supabase
-        .from('quiz_results')
-        .insert([payload])
-        .select();
+      setError('');
+      
+      // If Supabase fails, we still want to show results
+      try {
+        const { data, error } = await supabase
+          .from('quiz_results')
+          .insert([{
+            name: userInfo.name,
+            email: userInfo.email,
+            scores: scores || {},
+            responses: responses,
+            dominant_type: dominantType?.replace('type', '') || '',
+            second_type: secondType?.replace('type', '') || '',
+            third_type: thirdType?.replace('type', '') || '',
+            created_at: new Date().toISOString()
+          }])
+          .select();
 
-      if (error) {
-        console.error('Supabase Error:', {
-          message: error.message,
-          details: error.details,
-          hint: error.hint
-        });
-        throw error;
+        if (error) {
+          console.error('Supabase Error:', error);
+          // Don't return - continue to show results
+        }
+      } catch (e) {
+        console.error('Database error:', e);
+        // Don't return - continue to show results
       }
 
-      console.log('Successfully saved results:', data);
+      // Always proceed to results, even if save fails
       setStep('results');
     } catch (error) {
-      console.error('Error submitting results:', error);
+      console.error('Error:', error);
+      setError('An error occurred. Please try again.');
     }
   };
 
   return (
     <div className="container mx-auto px-4 py-8">
+      {error && (
+        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+          {error}
+        </div>
+      )}
+      
       {step === "landing" && (
         <LandingPage onStart={() => setStep("introduction")} />
       )}
