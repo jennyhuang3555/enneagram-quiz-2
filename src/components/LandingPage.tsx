@@ -4,10 +4,11 @@ import { ArrowRight } from "lucide-react";
 
 const LandingPage = ({ onStart }: { onStart: () => void }) => {
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center p-4 space-y-8 animate-fade-in">
-      <Card className="max-w-2xl w-full p-8 glass-card space-y-6">
-        <h1 className="text-4xl font-bold text-center bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
-          Discover Your Enneagram Type
+    <div className="min-h-screen flex flex-col items-center justify-center p-4 space-y-6 animate-fade-in sm:space-y-8">
+      <Card className="max-w-2xl w-full p-6 sm:p-8 glass-card space-y-4 sm:space-y-6 mt-[-2rem] sm:mt-0">
+        <h1 className="text-3xl sm:text-4xl font-bold text-center bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent leading-tight">
+          Discover Your{' '}
+          <span className="block">Enneagram Type</span>
         </h1>
         
         <div className="space-y-4 text-center">
