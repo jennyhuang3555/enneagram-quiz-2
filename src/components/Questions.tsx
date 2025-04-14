@@ -6,6 +6,7 @@ import { QuestionResponse } from "@/types/quiz";
 interface QuestionsProps {
   onComplete: (scores: { [key: string]: number }, responses: QuestionResponse[]) => void;
   onBack: () => void;
+  totalQuestions: number;
 }
 
 // Initialize all 9 types
@@ -30,7 +31,7 @@ function shuffleArray<T>(array: T[]): T[] {
   return shuffled;
 }
 
-const Questions = ({ onComplete, onBack }: QuestionsProps) => {
+const Questions = ({ onComplete, onBack, totalQuestions }: QuestionsProps) => {
   const [questions] = useState(() => shuffleArray(quizData.questions));
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [scores, setScores] = useState<{ [key: string]: number }>(INITIAL_SCORES);
@@ -94,6 +95,8 @@ const Questions = ({ onComplete, onBack }: QuestionsProps) => {
       setCurrentQuestion(currentQuestion - 1);
     }
   };
+
+  const progress = ((currentQuestion + 1) / totalQuestions) * 100;
 
   return (
     <QuizQuestion

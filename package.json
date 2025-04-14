@@ -11,7 +11,8 @@
     "preview": "vite preview",
     "convert-quiz": "node src/scripts/convert-quiz-questions.js",
     "convert-types": "node src/scripts/excel-to-json.js",
-    "format-types": "node src/scripts/format-html.js"
+    "format-types": "node src/scripts/format-html.js",
+    "convert-triad": "node scripts/convert-triad-questions.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",

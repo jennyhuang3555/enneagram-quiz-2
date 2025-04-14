@@ -1,0 +1,128 @@
+[
+  {
+    "id": "triad-1",
+    "questionNumber": 1,
+    "statements": [
+      {
+        "type": "type1",
+        "text": "I value integrity, honesty, and doing the right thing"
+      },
+      {
+        "type": "type2",
+        "text": "I value kindness, generosity and connection."
+      },
+      {
+        "type": "type3",
+        "text": "I value achievement, efficiency and success."
+      },
+      {
+        "type": "type4",
+        "text": "I value authenticity, originality, and emotional depth"
+      },
+      {
+        "type": "type5",
+        "text": "I value knowledge, privacy and self-reliance "
+      },
+      {
+        "type": "type6",
+        "text": "I value loyalty, dependability, and being prepared"
+      },
+      {
+        "type": "type7",
+        "text": "I value freedom, adventure and possibilities."
+      },
+      {
+        "type": "type8",
+        "text": "I value strength, resilience and assertiveness"
+      },
+      {
+        "type": "type9",
+        "text": "I value harmony, peace and comfort."
+      }
+    ]
+  },
+  {
+    "id": "triad-2",
+    "questionNumber": 2,
+    "statements": [
+      {
+        "type": "type1",
+        "text": "I feel happiest when things or people live up to the high standards I hold."
+      },
+      {
+        "type": "type2",
+        "text": "I feel happiest when I’m helping others and making them feel loved."
+      },
+      {
+        "type": "type3",
+        "text": "I feel happiest when people see me as competent and successful."
+      },
+      {
+        "type": "type4",
+        "text": "I feel happiest when I find deep meaning in beauty, art, and self-expression."
+      },
+      {
+        "type": "type5",
+        "text": "I feel happiest when I have enough knowledge and resources."
+      },
+      {
+        "type": "type6",
+        "text": "I feel happiest and at ease when I can rely on others to be consistent and dependable."
+      },
+      {
+        "type": "type7",
+        "text": "I feel happiest when I'm excited by new ideas, experiences, and possibilities."
+      },
+      {
+        "type": "type8",
+        "text": "I feel happiest when I'm strong and independent."
+      },
+      {
+        "type": "type9",
+        "text": "I feel happiest when things are peaceful and everyone gets along."
+      }
+    ]
+  },
+  {
+    "id": "triad-3",
+    "questionNumber": 3,
+    "statements": [
+      {
+        "type": "type1",
+        "text": "I focus on doing things the right way and avoiding mistakes."
+      },
+      {
+        "type": "type2",
+        "text": "I focus on other people’s needs and how I can be helpful."
+      },
+      {
+        "type": "type3",
+        "text": "I focus on accomplishing tasks and enjoy being productive. It can be difficult for me to slow down."
+      },
+      {
+        "type": "type4",
+        "text": "I focus on my inner emotional world and authentic self-expression."
+      },
+      {
+        "type": "type5",
+        "text": "I focus on gaining knowledge and understanding how things work."
+      },
+      {
+        "type": "type6",
+        "text": "I focus on finding reliable support and being aware of risks, dangers, or threats."
+      },
+      {
+        "type": "type7",
+        "text": "I focus on interesting activities, keeping my options open and maintaining freedom."
+      },
+      {
+        "type": "type8",
+        "text": "I focus on being direct and standing up for what I believe in."
+      },
+      {
+        "type": "type9",
+        "text": "I focus on keeping the peace and excel at mediating or avoiding conflicts."
+      }
+    ]
+  }
+]

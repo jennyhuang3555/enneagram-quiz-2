@@ -32,3 +32,20 @@ export interface QuestionResponse {
   score: number;
   answerText: string;
 }
+
+export interface TriadQuestion {
+  id: string;
+  questionNumber: number;
+  statements: {
+    type: string;
+    text: string;
+  }[];
+}
+
+// Update existing QuizState type to include new section
+export interface QuizState {
+  section: 1 | 2;
+  initialScores: { [key: string]: number };
+  finalScores: { [key: string]: number } | null;
+  topThreeTypes: string[];
+}

@@ -8,8 +8,10 @@ import QuizResults from "@/components/QuizResults";
 import UserInfoForm from "@/components/UserInfoForm";
 import { supabase } from "@/lib/supabase";
 import { QuestionResponse } from "@/types/quiz";
+import TriadQuestions from "@/components/TriadQuestions";
+import { triadQuestions } from '@/data/triad-questions';
 
-type Step = "landing" | "introduction" | "questions" | "user-info" | "results";
+type Step = "landing" | "introduction" | "quiz" | "user-info" | "results";
 
 // Sample quiz data - in a real app, this would come from your backend
 const sampleQuiz = {
@@ -54,18 +56,52 @@ const Index = () => {
   const [secondType, setSecondType] = useState<string>('');
   const [thirdType, setThirdType] = useState<string>('');
   const [error, setError] = useState<string>('');
+  const [quizSection, setQuizSection] = useState<1 | 2>(1);
+  const [initialScores, setInitialScores] = useState<{ [key: string]: number } | null>(null);
 
-  const handleQuizComplete = (
-    newScores: { [key: string]: number }, 
+  // Handle completion of section 1
+  const handleSection1Complete = (
+    newScores: { [key: string]: number },
     quizResponses: QuestionResponse[]
   ) => {
-    setScores(newScores);
     setResponses(quizResponses);
+    setInitialScores(newScores);
     
     // Sort by score values (highest to lowest)
     const sortedTypes = Object.entries(newScores)
       .sort(([typeA, scoreA], [typeB, scoreB]) => {
         // If scores are equal, prefer the type closer to 1
+        if (scoreB === scoreA) {
+          const numA = parseInt(typeA.replace('type', ''));
+          const numB = parseInt(typeB.replace('type', ''));
+          return numA - numB;
+        }
+        return scoreB - scoreA;
+      })
+      .map(([type]) => type);
+    
+    // Set top three types
+    setDominantType(sortedTypes[0]);
+    setSecondType(sortedTypes[1]);
+    setThirdType(sortedTypes[2]);
+    
+    // Move to section 2
+    setQuizSection(2);
+  };
+
+  // Handle completion of section 2 (triad questions)
+  const handleSection2Complete = (triadScores: { [key: string]: number }) => {
+    // Combine scores from both sections
+    const finalScores = { ...initialScores };
+    Object.entries(triadScores).forEach(([type, score]) => {
+      finalScores[type] = (finalScores[type] || 0) + score;
+    });
+    
+    setScores(finalScores);
+    
+    // Re-sort based on final scores
+    const sortedTypes = Object.entries(finalScores)
+      .sort(([typeA, scoreA], [typeB, scoreB]) => {
         if (scoreB === scoreA) {
           const numA = parseInt(typeA.replace('type', ''));
           const numB = parseInt(typeB.replace('type', ''));
@@ -119,37 +155,70 @@ const Index = () => {
     }
   };
 
+  const renderCurrentStep = () => {
+    switch (step) {
+      case "landing":
+        return <LandingPage onStart={() => setStep("introduction")} />;
+      case "introduction":
+        return (
+          <TestIntroduction
+            onStart={() => setStep("quiz")}
+            onBack={() => setStep("landing")}
+          />
+        );
+      case "quiz":
+        return quizSection === 1 ? (
+          <Questions
+            onComplete={handleSection1Complete}
+            onBack={() => setStep("introduction")}
+            totalQuestions={sampleQuiz.questions.length + 3}
+          />
+        ) : (
+          <TriadQuestions
+            questions={triadQuestions}
+            topThreeTypes={[dominantType, secondType, thirdType].map(type => 
+              type.startsWith('type') ? type : `type${type}`
+            )}
+            onComplete={handleSection2Complete}
+            totalQuestions={sampleQuiz.questions.length + 3}
+            questionsCompleted={sampleQuiz.questions.length}
+          />
+        );
+      case "user-info":
+        return (
+          <UserInfoForm
+            onSubmit={handleUserInfoSubmit}
+            onBack={() => setStep("quiz")}
+          />
+        );
+      case "results":
+        return scores ? (
+          <QuizResults
+            quiz={sampleQuiz}
+            scores={scores}
+            responses={responses}
+            onClose={() => {
+              setStep("landing");
+              setScores(null);
+              setResponses([]);
+              setQuizSection(1);
+              setInitialScores(null);
+            }}
+          />
+        ) : null;
+      default:
+        return null;
+    }
+  };
+
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="min-h-screen bg-gradient-to-b from-purple-50 to-pink-50">
       {error && (
         <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
           {error}
         </div>
       )}
-      
-      {step === "landing" && (
-        <LandingPage onStart={() => setStep("introduction")} />
-      )}
-      {step === "introduction" && (
-        <TestIntroduction onStart={() => setStep("questions")} />
-      )}
-      {step === "questions" && (
-        <Questions
-          onComplete={handleQuizComplete}
-          onBack={() => setStep("introduction")}
-        />
-      )}
-      {step === "user-info" && (
-        <UserInfoForm onSubmit={handleUserInfoSubmit} />
-      )}
-      {step === "results" && scores && (
-        <QuizResults
-          quiz={sampleQuiz}
-          scores={scores}
-          responses={responses}
-          onClose={() => setStep("landing")}
-        />
-      )}
+      {renderCurrentStep()}
     </div>
   );
 };
