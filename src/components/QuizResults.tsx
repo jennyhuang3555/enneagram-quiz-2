@@ -145,7 +145,7 @@ const QuizResults = ({ quiz, scores, responses, onClose }: QuizResultsProps) => 
         </p>
       </div>
       
-      <div className="h-[600px] w-full">
+      <div className="h-[420px] w-[95%] mx-auto">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart
             data={chartData}
