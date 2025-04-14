@@ -125,8 +125,12 @@ const QuizResults = ({ quiz, scores, responses, onClose }: QuizResultsProps) => 
 
   return (
     <Card className="p-8 max-w-4xl mx-auto space-y-8 animate-fade-in bg-white/95 backdrop-blur">
+      <h1 className="text-3xl font-bold text-black text-center">
+        Your Enneagram Profile
+      </h1>
+
       <div className="text-center space-y-4">
-        <h2 className="text-4xl font-bold text-center mb-4 bg-gradient-to-r from-purple-500 to-pink-500 text-transparent bg-clip-text">
+        <h2 className="text-4xl md:text-4xl text-3xl font-bold text-center mb-4 bg-gradient-to-r from-purple-500 to-pink-500 text-transparent bg-clip-text">
           {dominantTypeDesc.title}
         </h2>
         
